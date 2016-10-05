@@ -1,0 +1,10 @@
+.modal-visible{
+
+}
+.modal-hidden{
+  display: none;
+}
+
+td:hover{
+  cursor: pointer;
+}

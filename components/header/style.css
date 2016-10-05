@@ -1,0 +1,46 @@
+header{
+  height: 50px;
+  background-color: #55f;
+}
+#header_container{
+  margin: 0 auto;
+  max-width: 1000px;
+  position: relative;
+  z-index: 2;
+}
+
+#header_container > *{
+  display: inline-block;
+}
+
+#logo{
+  font-size: 2em;
+  color: #fff;
+  margin: 3px;
+}
+
+#user_header{
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  padding: 8px;
+  color: #ddd;
+}
+
+#user_header:hover{
+  background-color: #22a;
+}
+
+#user_header > *{
+  display: inline-block;
+}
+
+#dropdownMenu1{
+  background-color:
+  inherit;border: 0;
+  margin: 0;
+}
+
+#user_header img{
+  width: 30px;
+}

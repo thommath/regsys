@@ -1,0 +1,52 @@
+
+
+#content{
+  max-width: 1000px;
+  margin: -50px auto 0 auto;
+  padding-top: 50px;
+  min-height: 100%;
+  position: relative;
+}
+
+#content > *{
+  display: inline-block;
+}
+
+
+#left{
+  width: 150px;
+  margin: 20px 0 0 0;
+  float: left;
+}
+
+#left + #center{
+  margin-left: 150px;
+  overflow: auto;
+}
+
+nav > *{
+  display: block;
+  margin: 2px;
+}
+
+nav a{
+  color: #003;
+}
+
+#center{
+  width: inherit;
+  margin: inherit;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  top: 100px;
+  left: 0;
+  z-index: 0;
+}
+
+
+/* ------- Regnskap --------*/
+
+#regnskap{
+  margin: 5px;
+}

@@ -1,0 +1,32 @@
+
+html, body{
+  height: 100%;
+}
+
+form > *{
+  margin 5px;
+}
+
+.constWidth{
+  width: 100px;
+}
+
+.negative{
+  color: red;
+}
+
+th, td{
+  min-width: 50px;
+}
+.nav-month *{
+  display: inline-block;
+}
+img{
+  max-width: 100%;
+}
+
+.alert{
+  margin: 10px;
+}
+.modal-backdrop.in { z-index: 60;}
+.modal-dialog{z-index: 100;}
