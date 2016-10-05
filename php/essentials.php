@@ -2,7 +2,6 @@
 require_once("login.php");
 
 function getData(){
-
   $colors = [["rgba(88, 43, 0, 0.2)", "rgba(88, 43, 0, 1)"],
             ["rgba(194, 0, 132, 0.2)", "rgba(194, 0, 132, 1)"],
             ["rgba(0, 255, 164, 0.2)", "rgba(0, 255, 164, 1)"],
@@ -28,16 +27,12 @@ function getData(){
     }
     unset($i);
   }
-  //Round month down and up
-//  $month = getMonthIntervall($monthChange);
   //Printing bills
-//  $billsResult = $conn->query("SELECT * FROM Bill WHERE `user`=" . $_SESSION['user'] . " AND `date`>='" . $month['start'] . "' AND `date`<'" . $month['end'] . "'" . " ORDER BY date ASC");
   $billsResult = $conn->query("SELECT * FROM Bill WHERE `user`=" . $_SESSION['user'] . " ORDER BY date ASC");
   $bills = [];
   $month = [];
   if($billsResult->num_rows >= 1){
     while($row = $billsResult->fetch_assoc()){
-
       //Find out what month it belogs to
       if(intval(substr($row['date'], 8, 9)) < getMonthStart()){
         $date = changeMonth($row['date'], 0);
@@ -66,13 +61,10 @@ function getData(){
       }
     }
   }
-//  $data['bills'] = $bills;
   $data['categories'] = $categories;
   $data['month'] = $month;
-//  var_dump($month);
   return $data;
 }
-
 
 
 function protect($string){
