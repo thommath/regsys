@@ -1,6 +1,7 @@
 <?php
 require_once("login.php");
 
+
 function setupData(){
   $colors = [["rgba(88, 43, 0, 0.2)", "rgba(88, 43, 0, 1)"],
             ["rgba(194, 0, 132, 0.2)", "rgba(194, 0, 132, 1)"],
@@ -34,7 +35,7 @@ function setupData(){
   $data['usage'] = 0;
   $data['income'] = 0;
   $data['sum'] = 0;
-  
+
   if($billsResult->num_rows >= 1){
     while($row = $billsResult->fetch_assoc()){
       //Find out what month it belogs to
@@ -79,9 +80,6 @@ function setupData(){
   $data['month'] = $month;
   $_SESSION['data'] = $data;
 }
-
-
-
 
 function startsWith($haystack, $needle) {
     // search backwards starting from haystack length characters from the end

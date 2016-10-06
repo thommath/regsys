@@ -11,7 +11,7 @@
   }
 
   //Round month down and up
-  $data = getData();
+  $data = $_SESSION['data'];
   $width = 84/count($data['categories']) . "%";
 ?>
 
@@ -19,7 +19,7 @@
 <section id="regnskap">
   <section class="nav-month">
     <a href="<?php echo "?p=regnskap&month=" . (intval($monthChange)-1);?>"><span class="glyphicon glyphicon-arrow-left btn-lg" aria-hidden="true"></span></a>
-    <h3 class="center-block"><?php echo monthToString(calculateMonth($monthChange));?></h3>
+    <h3 class="center-block"><?php echo monthToString($monthChange);?></h3>
     <a href="<?php echo "?p=regnskap&month=" . (intval($monthChange)+1);?>"><span class="glyphicon glyphicon-arrow-right btn-lg" aria-hidden="true"></span></a>
   </section>
 
@@ -44,7 +44,7 @@
                                                                data-category="<?php echo getCategoryFromId($data, $billValue['category'])['name'];?>"
                                                                data-categoryid="<?php echo getCategoryFromId($data, $billValue['category'])['id'];?>"
                                                                data-billid="<?php echo $billValue['id'];?>">
-            <td width="<?php echo $width;?>">
+            <td width="<?php echo $dateWidth;?>">
               <?php echo date('d.M', strtotime($billValue['date']));?>
             </td>
             <?php foreach ($data['categories'] as $category => $categoryValue):?>
