@@ -67,10 +67,7 @@ function getData(){
 }
 
 
-function protect($string){
-  $salt = "A@igqSmNb4CmA8OPKIzY71z(ARcp8_s1";
-  return hash("sha256", $salt . $string);
-}
+
 
 function startsWith($haystack, $needle) {
     // search backwards starting from haystack length characters from the end
