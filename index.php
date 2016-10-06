@@ -57,6 +57,12 @@
         <?php
         //Load component
         if(isset($_SESSION['user'])){
+
+          //Load data if doesn't exist
+          if(!isset($_SESSION['data'])){
+            setupData();
+          }
+
           if(isset($_GET['p'])){
             require_once("components/" . $_GET['p'] . "/index.php");
           }else{

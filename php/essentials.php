@@ -1,7 +1,7 @@
 <?php
 require_once("login.php");
 
-function getData(){
+function setupData(){
   $colors = [["rgba(88, 43, 0, 0.2)", "rgba(88, 43, 0, 1)"],
             ["rgba(194, 0, 132, 0.2)", "rgba(194, 0, 132, 1)"],
             ["rgba(0, 255, 164, 0.2)", "rgba(0, 255, 164, 1)"],
@@ -63,7 +63,7 @@ function getData(){
   }
   $data['categories'] = $categories;
   $data['month'] = $month;
-  return $data;
+  $_SESSION['data'] = $data;
 }
 
 
