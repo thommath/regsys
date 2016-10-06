@@ -44,7 +44,7 @@
                                                                data-category="<?php echo getCategoryFromId($data, $billValue['category'])['name'];?>"
                                                                data-categoryid="<?php echo getCategoryFromId($data, $billValue['category'])['id'];?>"
                                                                data-billid="<?php echo $billValue['id'];?>">
-            <td width="<?php echo $width;?>">
+            <td width="<?php echo $dateWidth;?>">
               <?php echo date('d.M', strtotime($billValue['date']));?>
             </td>
             <?php foreach ($data['categories'] as $category => $categoryValue):?>
