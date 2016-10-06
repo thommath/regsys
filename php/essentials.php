@@ -1,7 +1,7 @@
 <?php
 require_once("login.php");
 
-function getData(){
+function setupData(){
   $colors = [["rgba(88, 43, 0, 0.2)", "rgba(88, 43, 0, 1)"],
             ["rgba(194, 0, 132, 0.2)", "rgba(194, 0, 132, 1)"],
             ["rgba(0, 255, 164, 0.2)", "rgba(0, 255, 164, 1)"],
@@ -31,6 +31,10 @@ function getData(){
   $billsResult = $conn->query("SELECT * FROM Bill WHERE `user`=" . $_SESSION['user'] . " ORDER BY date ASC");
   $bills = [];
   $month = [];
+  $data['usage'] = 0;
+  $data['income'] = 0;
+  $data['sum'] = 0;
+  
   if($billsResult->num_rows >= 1){
     while($row = $billsResult->fetch_assoc()){
       //Find out what month it belogs to
@@ -48,6 +52,16 @@ function getData(){
       array_push($month[$date]['bills'], $row);
 
 
+      //find highest Voucher
+      $data['voucher'] = max($row['voucher'], $data['voucher']);
+
+      //sum usage and income
+      $data['usage'] += max(-$row['sum'], 0);
+      $data['income'] += max($row['sum'], 0);
+      $data['sum'] += $row['sum'];
+
+
+      //Save bills in categories
       foreach ($categories as $category => $value) {
         if($category == $row['category']){
           if($row['sum'] < 0){
@@ -63,14 +77,11 @@ function getData(){
   }
   $data['categories'] = $categories;
   $data['month'] = $month;
-  return $data;
+  $_SESSION['data'] = $data;
 }
 
 
-function protect($string){
-  $salt = "A@igqSmNb4CmA8OPKIzY71z(ARcp8_s1";
-  return hash("sha256", $salt . $string);
-}
+
 
 function startsWith($haystack, $needle) {
     // search backwards starting from haystack length characters from the end
@@ -109,7 +120,11 @@ function monthToString($month){
   $names = ["January" , "February" , "March" , "April", "May",
         "June", "July", "August", "September", "October",
         "November", "December"];
-  return $names[intval($month)-1];
+  if(getMonthStart() == 1){
+    return $names[intval(date("m"))+intval($month)-1];
+  }else {
+    return substr($names[(intval(date("m"))+intval($month)-2+12*1000)%12], 0, 3) . "/" . substr($names[(intval(date("m"))+intval($month)-1+12*1000)%12], 0, 3);
+  }
 }
 
 function arrayToString($arr, $isString){
