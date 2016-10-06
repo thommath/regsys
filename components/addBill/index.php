@@ -29,6 +29,14 @@
       </div>
     </div>
 
+    <!-- Voucher -->
+    <div class="form-group">
+      <label for="voucher" class="col-sm-2 control-label">Voucher </label>
+      <div class="col-sm-10">
+        <input type="text" name="voucher" value="<?php echo intval($_SESSION['data']['voucher'])+1;?>" class="form-control" id="voucher"></input>
+      </div>
+    </div>
+
     <div class="form-group">
       <label for="description" class="col-sm-2 control-label">Description </label>
       <div class="col-sm-10">

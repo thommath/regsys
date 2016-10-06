@@ -48,6 +48,11 @@ function setupData(){
       array_push($month[$date]['bills'], $row);
 
 
+      //find highest Voucher
+      $data['voucher'] = max($row['voucher'], $data['voucher']);
+
+
+      //Save bills in categories
       foreach ($categories as $category => $value) {
         if($category == $row['category']){
           if($row['sum'] < 0){
