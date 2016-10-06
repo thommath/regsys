@@ -59,7 +59,7 @@
         if(isset($_SESSION['user'])){
 
           //Load data if doesn't exist
-          if(!isset($_SESSION['data'])){
+          if(!isset($_SESSION['data']) || $_SESSION['success'] == true){
             setupData();
           }
 
@@ -78,6 +78,7 @@
         unset($_SESSION['post']);
         unset($_SESSION['error']);
         unset($_SESSION['from']);
+        unset($_SESSION['success']);
         ?>
       </section>
     </section>

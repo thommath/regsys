@@ -19,7 +19,7 @@
       $_POST[$key] = htmlentities($value);
     }
 
-    $accepted = $conn->query("INSERT INTO `Bill`(`description`, `category`, `user`, `sum`, `date`) VALUES ('" . $_POST['description'] . "', " . $_POST['category'] . ", " . $_SESSION['user'] . ", " . $_POST['sum'] . ", '" . $_POST['date'] . "')");
+    $accepted = $conn->query("INSERT INTO `Bill`(`voucher`, `description`, `category`, `user`, `sum`, `date`) VALUES (" . $_POST['voucher'] . ", '" . $_POST['description'] . "', " . $_POST['category'] . ", " . $_SESSION['user'] . ", " . $_POST['sum'] . ", '" . $_POST['date'] . "')");
 
     if(!$accepted){
         array_push($errorList, "Ohh no! It seems like there is a bug in here? It's hiding, can you help me catch it by emailing us? Thank you :)");
