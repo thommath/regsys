@@ -6,7 +6,7 @@
   if(isset($_GET['month'])){
     $monthChange = $_GET['month'];
   }
-  $data = getData();
+  $data = $_SESSION['data'];
 //  $totalMonthIncomeData = getTotalIncome($monthIncome);
 //  $totalMonthUsageData = getTotalUsage($monthUsage);
 //  $stack = getStack($categories);

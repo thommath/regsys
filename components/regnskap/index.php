@@ -11,7 +11,7 @@
   }
 
   //Round month down and up
-  $data = getData();
+  $data = $_SESSION['data'];
   $width = 84/count($data['categories']) . "%";
 ?>
 
