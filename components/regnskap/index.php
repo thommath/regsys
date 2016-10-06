@@ -19,7 +19,7 @@
 <section id="regnskap">
   <section class="nav-month">
     <a href="<?php echo "?p=regnskap&month=" . (intval($monthChange)-1);?>"><span class="glyphicon glyphicon-arrow-left btn-lg" aria-hidden="true"></span></a>
-    <h3 class="center-block"><?php echo monthToString(calculateMonth($monthChange));?></h3>
+    <h3 class="center-block"><?php echo monthToString($monthChange);?></h3>
     <a href="<?php echo "?p=regnskap&month=" . (intval($monthChange)+1);?>"><span class="glyphicon glyphicon-arrow-right btn-lg" aria-hidden="true"></span></a>
   </section>
 

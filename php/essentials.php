@@ -106,7 +106,11 @@ function monthToString($month){
   $names = ["January" , "February" , "March" , "April", "May",
         "June", "July", "August", "September", "October",
         "November", "December"];
-  return $names[intval($month)-1];
+  if(getMonthStart() == 1){
+    return $names[intval(date("m"))+intval($month)-1];
+  }else {
+    return substr($names[(intval(date("m"))+intval($month)-2+12*1000)%12], 0, 3) . "/" . substr($names[(intval(date("m"))+intval($month)-1+12*1000)%12], 0, 3);
+  }
 }
 
 function arrayToString($arr, $isString){
