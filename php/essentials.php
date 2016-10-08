@@ -58,6 +58,8 @@ function setupData(){
       $data['voucher'] = max($row['voucher'], $data['voucher']);
 
       //sum usage and income
+      $month[$date]['usage'] += max(-$row['sum'], 0);
+      $month[$date]['income'] += max($row['sum'], 0);
       $data['usage'] += max(-$row['sum'], 0);
       $data['income'] += max($row['sum'], 0);
       $data['sum'] += $row['sum'];
@@ -139,6 +141,27 @@ function arrayToString($arr, $isString){
       $value = 0;
     }
     $str .= $value;
+    if($isString){
+      $str .= "\"";
+    }
+    $str .= ", ";
+  }
+  return substr($str, 0, count($str)-3) . "]";
+}
+
+function arrayToStringKey($arr, $isString){
+  if(count($arr) == 0){
+    return "[]";
+  }
+  $str = "[";
+  foreach ($arr as $key => $value) {
+    if($isString){
+      $str .= "\"";
+    }
+    if($key == Null){
+      $value = 0;
+    }
+    $str .= $key;
     if($isString){
       $str .= "\"";
     }

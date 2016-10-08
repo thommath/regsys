@@ -20,19 +20,12 @@
     <a href="<?php echo "?p=dashboard&month=" . (intval($monthChange)+1);?>"><span class="glyphicon glyphicon-arrow-right btn-lg" aria-hidden="true"></span></a>
   </section>
 
-      <canvas id="doubleChart" width="400" height="400"></canvas>
+  <canvas id="doubleChart"></canvas>
+  <canvas id="yearChart"></canvas>
 </section>
 
 
 <script>
-<?php
-/*
-echo "var usageData = " . html_entity_decode(arrayToStringWithKey(sanitizeUsage($categories, 'usage'), 'usage', false)) . ";";
-echo "var usageLabels = " . html_entity_decode(arrayToStringWithKey(sanitizeUsage($categories, 'usage'), 'name', true)) . ";";
-echo "var incomeData = " . html_entity_decode(arrayToStringWithKey(sanitizeUsage($categories, 'income'), 'income', false)) . ";";
-echo "var incomeLabels = " . html_entity_decode(arrayToStringWithKey(sanitizeUsage($categories, 'income'), 'name', true)) . ";";
-*/
-?>
 
 var options = {
     scales: {
@@ -46,78 +39,51 @@ var options = {
 
 //var usageChartElement = document.getElementById("usageChart");
 //var incomeChartElement = document.getElementById("incomeChart");
-//var stackChartElement = document.getElementById("stackChart");
+var yearChartElement = document.getElementById("yearChart");
 var doubleChartElement = document.getElementById("doubleChart");
-/*
-var usageChart = new Chart(usageChartElement, {
-    type: 'bar',
+
+//Year
+
+<?php
+  $diff = [];
+  foreach($data['month'] as $key => $value){
+    array_push($diff, intval($value['income'])-intval($value['usage']));
+  }
+
+?>
+
+<?php if($data[month] != null):?>
+var yearChart = new Chart(yearChartElement, {
+    type: 'line',
     data: {
-        labels: ["Usage"],
+        labels: <?php echo arrayToStringKey($data['month'], true);?>,
         datasets: [
-          <?php foreach (sanitizeUsage($data['categories'], 'usage') as $key => $value): ?>
           {
-            label: "<? echo html_entity_decode($value['name']);?>",
-            data: [<? echo $value['usage'];?>],
-            backgroundColor: "<?php echo $value['colors'][0]?>",
-            borderColor: "<?php echo $value['colors'][1];?>",
+            label: ["usage"],
+            data: <?php echo arrayToStringWithKey($data['month'], 'usage', false);?>,
+            backgroundColor: 'rgba(0, 0, 0, 0)',
+            borderColor: "#00f",
             borderWidth: 1
-        } ,
-        <?php endforeach; ?>
+          } ,{
+            label: ["income"],
+            data: <?php echo arrayToStringWithKey($data['month'], 'income', false);?>,
+            backgroundColor: 'rgba(0, 0, 0, 0)',
+            borderColor: "#f00",
+            borderWidth: 1
+          } ,{
+            label: ["Difference"],
+            data: <?php echo arrayToString($diff, false);?>,
+            backgroundColor: 'rgba(0, 0, 0, 0)',
+            borderColor: "#000",
+            borderWidth: 1
+          }
       ]
     },
     options: options
 });
+<?php endif;?>
 
-var incomeChart = new Chart(incomeChartElement, {
-    type: 'bar',
-    data: {
-        labels: ["Income"],
-        datasets: [
-          <?php foreach (sanitizeUsage($data['categories'], 'income') as $key => $value): ?>
-          {
-            label: "<? echo html_entity_decode($value['name']);?>",
-            data: [<? echo $value['income'];?>],
-            backgroundColor: "<?php echo $value['colors'][0]?>",
-            borderColor: "<?php echo $value['colors'][1];?>",
-            borderWidth: 1
-        } ,
-        <?php endforeach; ?>
-      ]
-    },
-    options: options
-});
-
-var stackChart = new Chart(stackChartElement, {
-    type: 'bar',
-    data: {
-        labels: ["Usage", "Income"],
-        datasets: [
-          <?php foreach ($data['categories'] as $key => $value): ?>
-          {
-            label: "<? echo html_entity_decode($value['name']);?>",
-            data: <? echo arrayToString([$value['usage'], $value['income']], false);?>,
-            backgroundColor: "<?php echo $value['colors'][0]?>",
-            borderColor: "<?php echo $value['colors'][1];?>",
-            borderWidth: 1
-        } ,
-        <?php endforeach; ?>
-      ]
-    },
-    options: {
-        scales: {
-            xAxes: [{
-                stacked: true
-            }],
-            yAxes: [{
-                stacked: true,
-                ticks: {
-                    beginAtZero:true
-                  }
-            }]
-        }
-    }
-});
-*/
+//Month
 <?php if(sanitizeUsageTwo($data['month'][calculateMonth($monthChange)]['categories'], 'income', 'usage') != null):?>
 var doubleChart = new Chart(doubleChartElement, {
     type: 'bar',
