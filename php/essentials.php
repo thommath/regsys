@@ -35,6 +35,7 @@ function setupData(){
   $data['usage'] = 0;
   $data['income'] = 0;
   $data['sum'] = 0;
+  $startCategories = $categories;
 
   if($billsResult->num_rows >= 1){
     while($row = $billsResult->fetch_assoc()){
@@ -47,7 +48,7 @@ function setupData(){
       //If doesn't exist, make it
       if(!isset($month[$date])){
         $month[$date]['bills'] = [];
-        $month[$date]['categories'] = $categories;
+        $month[$date]['categories'] = $startCategories;
       }
       //Add it to month
       array_push($month[$date]['bills'], $row);
