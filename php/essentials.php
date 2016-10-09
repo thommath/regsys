@@ -3,6 +3,16 @@ require_once("login.php");
 
 
 function setupData(){
+  $conn = getConnection();
+  //settings
+  $settingsQuerry = $conn->query("SELECT * FROM Settings WHERE id=" . $_SESSION['user']);
+  if($settingsQuerry->num_rows >= 1){
+    $data['settings'] = $settingsQuerry->fetch_assoc();
+  }else{
+    $conn->query("INSERT INTO `Settings`(`user`) VALUES (" . $user['id'] . ")");
+    $data['settings'] = $conn->query("SELECT * FROM Settings WHERE id=" . $_SESSION['user'])->fetch_assoc();
+  }
+
   $colors = [["rgba(88, 43, 0, 0.2)", "rgba(88, 43, 0, 1)"],
             ["rgba(194, 0, 132, 0.2)", "rgba(194, 0, 132, 1)"],
             ["rgba(0, 255, 164, 0.2)", "rgba(0, 255, 164, 1)"],
@@ -14,7 +24,6 @@ function setupData(){
             ["rgba(0, 229, 232, 0.2)", "rgba(0, 229, 232, 1)"],
             ["rgba(245, 173, 0, 0.2)", "rgba(245, 173, 0, 1)"]];
 
-  $conn = getConnection();
   //Printing categories
   $categoriesQuery = $conn->query("SELECT * FROM Category WHERE `user`=" . $_SESSION['user']);
   $categories = [];
@@ -40,7 +49,7 @@ function setupData(){
   if($billsResult->num_rows >= 1){
     while($row = $billsResult->fetch_assoc()){
       //Find out what month it belogs to
-      if(intval(substr($row['date'], 8, 9)) < getMonthStart()){
+      if(intval(substr($row['date'], 8, 9)) < $data['settings']['startDay']){
         $date = changeMonth($row['date'], 0);
       }else{
         $date = changeMonth($row['date'], 1);
@@ -79,6 +88,7 @@ function setupData(){
       }
     }
   }
+
   $data['categories'] = $categories;
   $data['month'] = $month;
   $_SESSION['data'] = $data;
@@ -95,7 +105,7 @@ function endsWith($haystack, $needle) {
 }
 
 function getMonthStart(){
-  return "14";
+  return $_SESSION['data']['settings']['startDay'];
 }
 
 function changeMonth($date, $monthChange){
