@@ -9,6 +9,7 @@
   if(isset($_GET['month'])){
     $monthChange = $_GET['month'];
   }
+  $month = calculateMonth($monthChange);
 
   //Round month down and up
   $data = $_SESSION['data'];
@@ -36,8 +37,8 @@
       </tr>
 
       <!--Table row Printing all bills-->
-      <?php if(isset($data['month'][calculateMonth($monthChange)])):?>
-        <?php foreach ($data['month'][calculateMonth($monthChange)]['bills'] as $key => $billValue): ?>
+      <?php if(isset($data['month'][$month])):?>
+        <?php foreach ($data['month'][$month]['bills'] as $key => $billValue): ?>
           <tr data-toggle="modal" data-target="#regnskapModal" data-date="<?php echo $billValue['date'];?>"
                                                                data-desc="<?php echo $billValue['description'];?>"
                                                                data-sum="<?php echo $billValue['sum'];?>"
@@ -63,7 +64,7 @@
         <?php endforeach; ?>
       <?php else: ?>
         <p>
-          You have no data for this periode
+          You have no bills for this month
         </p>
       <?php endif;?>
 
@@ -72,15 +73,14 @@
         <th width="<?php echo $dateWidth;?>">Sum</th>
         <?php
         $total = 0;
-          foreach ($data['month'][calculateMonth($monthChange)]['categories'] as $category => $value):
-            $sum = $value['income'] - $value['usage'];
-            $total += $sum;?>
+          foreach ($data['month'][$month]['categories'] as $category => $value):
+            $sum = $value['income'] - $value['usage'];?>
             <th width="<?php echo $wdth;?>"<?php if($sum < 0){echo " class=\"negative\"";}?>>
               <?php echo $sum;?>
             </th>
           <?php endforeach;?>
-        <th width="<?php echo $totalWidth;?>"<?php if($total < 0){echo " class=\"negative\"";}?>>
-          <?php echo $total;?>
+        <th width="<?php echo $totalWidth;?>"<?php if($data['month'][$month]['income']-$data['month'][$month]['usage'] < 0){echo " class=\"negative\"";}?>>
+          <?php echo $data['month'][$month]['income']-$data['month'][$month]['usage'];?>
         </th>
       </tr>
   </table>
