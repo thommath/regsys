@@ -4,15 +4,19 @@ require_once("login.php");
 
 function setupData(){
   $conn = getConnection();
+
   //settings
   $settingsQuerry = $conn->query("SELECT * FROM Settings WHERE id=" . $_SESSION['user']);
+  $settings;
   if($settingsQuerry->num_rows >= 1){
-    $data['settings'] = $settingsQuerry->fetch_assoc();
+    $settings = $settingsQuerry->fetch_assoc();
   }else{
     $conn->query("INSERT INTO `Settings`(`user`) VALUES (" . $user['id'] . ")");
-    $data['settings'] = $conn->query("SELECT * FROM Settings WHERE id=" . $_SESSION['user'])->fetch_assoc();
+    $settings = $conn->query("SELECT * FROM Settings WHERE id=" . $_SESSION['user'])->fetch_assoc();
   }
 
+
+  //Categories
   $colors = [["rgba(88, 43, 0, 0.2)", "rgba(88, 43, 0, 1)"],
             ["rgba(194, 0, 132, 0.2)", "rgba(194, 0, 132, 1)"],
             ["rgba(0, 255, 164, 0.2)", "rgba(0, 255, 164, 1)"],
@@ -24,7 +28,7 @@ function setupData(){
             ["rgba(0, 229, 232, 0.2)", "rgba(0, 229, 232, 1)"],
             ["rgba(245, 173, 0, 0.2)", "rgba(245, 173, 0, 1)"]];
 
-  //Printing categories
+
   $categoriesQuery = $conn->query("SELECT * FROM Category WHERE `user`=" . $_SESSION['user']);
   $categories = [];
   if($categoriesQuery->num_rows >= 1){
@@ -37,7 +41,8 @@ function setupData(){
     }
     unset($i);
   }
-  //Printing bills
+
+  //Bills
   $billsResult = $conn->query("SELECT * FROM Bill WHERE `user`=" . $_SESSION['user'] . " ORDER BY date ASC");
   $bills = [];
   $month = [];
@@ -49,7 +54,7 @@ function setupData(){
   if($billsResult->num_rows >= 1){
     while($row = $billsResult->fetch_assoc()){
       //Find out what month it belogs to
-      if(intval(substr($row['date'], 8, 9)) < $data['settings']['startDay']){
+      if(intval(substr($row['date'], 8, 9)) < $settings['startDay']){
         $date = changeMonth($row['date'], 0);
       }else{
         $date = changeMonth($row['date'], 1);
@@ -67,30 +72,28 @@ function setupData(){
       $data['voucher'] = max($row['voucher'], $data['voucher']);
 
       //sum usage and income
-      $month[$date]['usage'] += max(-$row['sum'], 0);
-      $month[$date]['income'] += max($row['sum'], 0);
       $data['usage'] += max(-$row['sum'], 0);
       $data['income'] += max($row['sum'], 0);
       $data['sum'] += $row['sum'];
 
+      $categories[$row['category']]['usage'] += max(-$row['sum'], 0);
+      $categories[$row['category']]['income'] += max($row['sum'], 0);
 
-      //Save bills in categories
-      foreach ($categories as $category => $value) {
-        if($category == $row['category']){
-          if($row['sum'] < 0){
-            $categories[$category]['usage'] -= $row['sum'];
-            $month[$date]['categories'][$category]['usage'] -= $row['sum'];
-          }else if($row['sum'] > 0){
-            $categories[$category]['income'] += $row['sum'];
-            $month[$date]['categories'][$category]['income'] += $row['sum'];
-          }
-        }
-      }
+      $month[$date]['usage'] += max(-$row['sum'], 0);
+      $month[$date]['income'] += max($row['sum'], 0);
+      $month[$date]['categories'][$row['category']]['usage'] += max(-$row['sum'], 0);
+      $month[$date]['categories'][$row['category']]['income'] += max($row['sum'], 0);
     }
   }
-
+  /*
+  Also exiastant:
+  $data['usage'];
+  $data['income'];
+  $data['sum'];
+  */
   $data['categories'] = $categories;
   $data['month'] = $month;
+  $data['settings'] = $settings;
   $_SESSION['data'] = $data;
 }
 
@@ -127,14 +130,14 @@ function calculateMonth($monthChange){
 }
 
 
-function monthToString($month){
+function monthToString($monthChange){
   $names = ["January" , "February" , "March" , "April", "May",
         "June", "July", "August", "September", "October",
         "November", "December"];
   if(getMonthStart() == 1){
-    return $names[intval(date("m"))+intval($month)-1];
+    return $names[intval(date("m"))+intval($monthChange)-1];
   }else {
-    return substr($names[(intval(date("m"))+intval($month)-2+12*1000)%12], 0, 3) . "/" . substr($names[(intval(date("m"))+intval($month)-1+12*1000)%12], 0, 3);
+    return substr($names[(intval(date("m"))+intval($monthChange)-2+12*1000)%12], 0, 3) . "/" . substr($names[(intval(date("m"))+intval($monthChange)-1+12*1000)%12], 0, 3);
   }
 }
 
@@ -159,7 +162,7 @@ function arrayToString($arr, $isString){
   return substr($str, 0, count($str)-3) . "]";
 }
 
-function arrayToStringKey($arr, $isString){
+function arrayKeyToString($arr, $isString){
   if(count($arr) == 0){
     return "[]";
   }
@@ -200,20 +203,6 @@ function arrayToStringWithKey($arr, $inKey, $isString){
     $str .= ", ";
   }
   return substr($str, 0, count($str)-3) . "]";
-}
-
-function getNext($array, $keyin){
-  $next = false;
-  foreach ($array as $key => $value) {
-    if($next){
-      return $key;
-    }else{
-      if($key == $keyin){
-        $next = true;
-      }
-    }
-  }
-  return "";
 }
 
 function getCategoryFromId($data, $id){

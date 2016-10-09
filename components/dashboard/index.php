@@ -56,7 +56,7 @@ var doubleChartElement = document.getElementById("doubleChart");
 var yearChart = new Chart(yearChartElement, {
     type: 'line',
     data: {
-        labels: <?php echo arrayToStringKey($data['month'], true);?>,
+        labels: <?php echo arrayKeyToString($data['month'], true);?>,
         datasets: [
           {
             label: ["usage"],
