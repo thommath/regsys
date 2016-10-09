@@ -39,7 +39,8 @@
       <!--Table row Printing all bills-->
       <?php if(isset($data['month'][$month])):?>
         <?php foreach ($data['month'][$month]['bills'] as $key => $billValue): ?>
-          <tr data-toggle="modal" data-target="#regnskapModal" data-date="<?php echo $billValue['date'];?>"
+          <tr data-toggle="modal" data-target="#regnskapModal"
+                                                               data-date="<?php echo $billValue['date'];?>"
                                                                data-desc="<?php echo $billValue['description'];?>"
                                                                data-sum="<?php echo $billValue['sum'];?>"
                                                                data-category="<?php echo getCategoryFromId($data, $billValue['category'])['name'];?>"
@@ -51,7 +52,8 @@
             <?php foreach ($data['categories'] as $category => $categoryValue):?>
 
               <?php if($billValue['category'] == $categoryValue['id']):?>
-                <td width="<?php echo $width;?>"<?php if($billValue['sum'] < 0){echo " class=\"negative\"";}?>>
+                <td width="<?php echo $width;?>" class="masterTooltip <?php if($billValue['sum'] < 0){echo "negative";}?>"
+                                                                     title="<?php echo $billValue['description'];?>">
                   <?php echo $billValue['sum'];?>
                 </td>
               <?php else : ;?>
@@ -85,3 +87,27 @@
       </tr>
   </table>
 </section>
+
+<script type="text/javascript">
+$(document).ready(function() {
+// Tooltip only Text
+$('.masterTooltip').hover(function(){
+        // Hover over code
+        var title = $(this).attr('title');
+        $(this).data('tipText', title).removeAttr('title');
+        $('<p class="desc"></p>')
+        .text(title)
+        .appendTo('body')
+        .fadeIn('slow');
+}, function() {
+        // Hover out code
+        $(this).attr('title', $(this).data('desc'));
+        $('.desc').remove();
+}).mousemove(function(e) {
+        var mousex = e.pageX + 20; //Get X coordinates
+        var mousey = e.pageY + 10; //Get Y coordinates
+        $('.desc')
+        .css({ top: mousey, left: mousex })
+});
+});
+</script>
