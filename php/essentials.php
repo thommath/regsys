@@ -54,7 +54,7 @@ function setupData(){
   if($billsResult->num_rows >= 1){
     while($row = $billsResult->fetch_assoc()){
       //Find out what month it belogs to
-      if(intval(substr($row['date'], 8, 9)) < $data['settings']['startDay']){
+      if(intval(substr($row['date'], 8, 9)) < $settings['startDay']){
         $date = changeMonth($row['date'], 0);
       }else{
         $date = changeMonth($row['date'], 1);
