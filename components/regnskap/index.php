@@ -36,6 +36,22 @@
         <th width="<?php echo $totalWidth;?>">Total</th>
       </tr>
 
+      <!--Optional first row with total from last month-->
+      <?php if($data['settings']['keepTotal'] == 1 && isset($data['month'][changeMonth($month, -1)]['total'])):?>
+        <tr>
+          <td width="<?php echo $width;?>"></td>
+          <?php foreach ($data['categories'] as $category => $categoryValue):?>
+            <td width="<?php echo $width;?>"></td>
+          <?php endforeach;?>
+          <?php $sum = $data['month'][changeMonth($month, -1)]['total'];?>
+          <td width="<?php echo $width;?>" class="masterTooltip <?php if($sum < 0){echo "negative";}?>"
+            title="Total from last month">
+            <?php echo $sum;?>
+          </td>
+        </tr>
+      <?php endif;?>
+
+
       <!--Table row Printing all bills-->
       <?php if(isset($data['month'][$month])):?>
         <?php foreach ($data['month'][$month]['bills'] as $key => $billValue): ?>
@@ -74,15 +90,16 @@
       <tr>
         <th width="<?php echo $dateWidth;?>">Sum</th>
         <?php
-        $total = 0;
-          foreach ($data['month'][$month]['categories'] as $category => $value):
-            $sum = $value['income'] - $value['usage'];?>
-            <th width="<?php echo $wdth;?>"<?php if($sum < 0){echo " class=\"negative\"";}?>>
-              <?php echo $sum;?>
-            </th>
-          <?php endforeach;?>
-        <th width="<?php echo $totalWidth;?>"<?php if($data['month'][$month]['income']-$data['month'][$month]['usage'] < 0){echo " class=\"negative\"";}?>>
-          <?php echo $data['month'][$month]['income']-$data['month'][$month]['usage'];?>
+        $total = $data['month'][$month]['total'];
+
+        foreach ($data['month'][$month]['categories'] as $category => $value):
+          $sum = $value['total'];?>
+          <th width="<?php echo $wdth;?>"<?php if($sum < 0){echo " class=\"negative\"";}?>>
+            <?php echo $sum;?>
+          </th>
+        <?php endforeach;?>
+        <th width="<?php echo $totalWidth;?>"<?php if($data['month'][$month]['total'] < 0){echo " class=\"negative\"";}?>>
+          <?php echo $total;?>
         </th>
       </tr>
   </table>

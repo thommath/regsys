@@ -19,7 +19,7 @@
       $_POST[$key] = htmlentities($value);
     }
 
-    $accepted = $conn->query("UPDATE `Settings` SET `startDay`='" . $_POST['startDay'] . "' WHERE `user`=" . $_SESSION['user']);
+    $accepted = $conn->query("UPDATE `Settings` SET `startDay`='" . $_POST['startDay'] . "', `keepTotal`='" . $_POST['keepTotal'] . "' WHERE `user`=" . $_SESSION['user']);
 
     if(!$accepted){
         array_push($errorList, "Ohh no! It seems like there is a bug in here? It's hiding, can you help me catch it by emailing us? Thank you :)");

@@ -43,7 +43,6 @@ var yearChartElement = document.getElementById("yearChart");
 var doubleChartElement = document.getElementById("doubleChart");
 
 //Year
-
 <?php
   $diff = [];
   foreach($data['month'] as $key => $value){
@@ -62,13 +61,13 @@ var yearChart = new Chart(yearChartElement, {
             label: ["usage"],
             data: <?php echo arrayToStringWithKey($data['month'], 'usage', false);?>,
             backgroundColor: 'rgba(0, 0, 0, 0)',
-            borderColor: "#00f",
+            borderColor: "#f00",
             borderWidth: 1
           } ,{
             label: ["income"],
             data: <?php echo arrayToStringWithKey($data['month'], 'income', false);?>,
             backgroundColor: 'rgba(0, 0, 0, 0)',
-            borderColor: "#f00",
+            borderColor: "#0f0",
             borderWidth: 1
           } ,{
             label: ["Difference"],
@@ -76,7 +75,13 @@ var yearChart = new Chart(yearChartElement, {
             backgroundColor: 'rgba(0, 0, 0, 0)',
             borderColor: "#000",
             borderWidth: 1
-          }
+          } <?php if($data['settings']['keepTotal'] == 1):?>,{
+            label: ["Saldo"],
+            data: <?php echo arrayToStringWithKey($data['month'], 'total', false);?>,
+            backgroundColor: 'rgba(0, 0, 0, 0)',
+            borderColor: "#00f",
+            borderWidth: 1
+          }<?php endif;?>
       ]
     },
     options: options
