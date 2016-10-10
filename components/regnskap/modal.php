@@ -43,8 +43,13 @@
         </form>
 
       </div>
+      <form id="deleteForm" style="display: none" action="components/editBill/deleteBill.php" method="post">
+        <input type="hidden" name="id" id="form-billid2">
+      </form>
+
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger" id="deleteFormSubmit" data-dismiss="modal">Delete</button>
         <button type="button" class="btn btn-primary modal-visible" id="modalEdit">Edit</button>
         <button type="button" class="btn btn-primary modal-hidden" data-toggle="form" id="editFormSubmit">Submit</button>
       </div>
@@ -73,6 +78,10 @@
     modal.find('#form-description').val(desc)
     modal.find('#form-sum').val(sum)
     modal.find('#form-billid').val(billid)
+    modal.find('#form-billid2').val(billid)
+  });
+  $( '#deleteFormSubmit' ).click(function() {
+    $( '#deleteForm' ).submit();
   });
   $( '#editFormSubmit' ).click(function() {
     $( '#editForm' ).submit();

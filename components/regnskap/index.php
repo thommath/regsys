@@ -25,6 +25,7 @@
   </section>
 
   <table class="table table-striped table-bordered">
+    <?php if(isset($data['month'][$month])):?>
     <!--Table header Printing all categories-->
       <tr>
         <th width="<?php echo $dateWidth;?>">Date</th>
@@ -53,7 +54,6 @@
 
 
       <!--Table row Printing all bills-->
-      <?php if(isset($data['month'][$month])):?>
         <?php foreach ($data['month'][$month]['bills'] as $key => $billValue): ?>
           <tr data-toggle="modal" data-target="#regnskapModal"
                                                                data-date="<?php echo $billValue['date'];?>"
@@ -80,11 +80,6 @@
             <td width="<?php echo $totalWidth;?>"></td>
           </tr>
         <?php endforeach; ?>
-      <?php else: ?>
-        <p>
-          You have no bills for this month
-        </p>
-      <?php endif;?>
 
       <!--Table row Printing all totals-->
       <tr>
@@ -102,6 +97,12 @@
           <?php echo $total;?>
         </th>
       </tr>
+
+    <?php else: ?>
+      <p>
+        You have no bills for this month
+      </p>
+    <?php endif;?>
   </table>
 </section>
 
@@ -118,7 +119,7 @@ $('.masterTooltip').hover(function(){
         .fadeIn('slow');
 }, function() {
         // Hover out code
-        $(this).attr('title', $(this).data('desc'));
+        $(this).attr('title', $(this).data('tipText'));
         $('.desc').remove();
 }).mousemove(function(e) {
         var mousex = e.pageX + 20; //Get X coordinates
