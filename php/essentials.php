@@ -74,15 +74,32 @@ function setupData(){
       //sum usage and income
       $data['usage'] += max(-$row['sum'], 0);
       $data['income'] += max($row['sum'], 0);
-      $data['sum'] += $row['sum'];
 
       $categories[$row['category']]['usage'] += max(-$row['sum'], 0);
       $categories[$row['category']]['income'] += max($row['sum'], 0);
 
       $month[$date]['usage'] += max(-$row['sum'], 0);
       $month[$date]['income'] += max($row['sum'], 0);
+
       $month[$date]['categories'][$row['category']]['usage'] += max(-$row['sum'], 0);
       $month[$date]['categories'][$row['category']]['income'] += max($row['sum'], 0);
+    }
+  }
+
+  //Calculate totals
+  $data['total'] += $data['income']-$data['usage'];
+  foreach($categories as $key=>$value){
+    $categories[$key]['total'] += $categories[$key]['income'] - $categories[$key]['usage'];
+  }
+  foreach($month as $key=>$value){
+    $month[$key]['total'] += $month[$key]['income'] - $month[$key]['usage'];
+
+    if($settings['keepTotal'] == 1){
+      $month[$key]['total']  += $month[changeMonth($key, -1)]['total'];
+    }
+
+    foreach($month[$key]['categories'] as $key2=>$value2){
+      $month[$key]['categories'][$key2]['total'] += $month[$key]['categories'][$key2]['income'] - $month[$key]['categories'][$key2]['usage'];
     }
   }
   /*

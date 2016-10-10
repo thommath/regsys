@@ -9,6 +9,12 @@
       </div>
     </div>
     <div class="form-group">
+      <label for="keepTotal" class="col-sm-2 control-label">Keep Total (0 for false, 1 for true)</label>
+      <div class="col-sm-10">
+        <input type="number" name="keepTotal" id="keepTotal" class="form-control" value="<?php if(isset($_POST['keepTotal'])){echo $_POST['keepTotal'];}else{echo $_SESSION['data']['settings']['keepTotal'];}?>"></input>
+      </div>
+    </div>
+    <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
         <button type="submit" class="btn btn-default">Submit</button>
       </div>
