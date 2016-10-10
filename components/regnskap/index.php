@@ -18,6 +18,7 @@
 
 
 <section id="regnskap">
+  
   <section class="nav-month">
     <a href="<?php echo "?p=regnskap&month=" . (intval($monthChange)-1);?>"><span class="glyphicon glyphicon-arrow-left btn-lg" aria-hidden="true"></span></a>
     <h3 class="center-block"><?php echo monthToString($monthChange);?></h3>
@@ -56,12 +57,13 @@
       <!--Table row Printing all bills-->
         <?php foreach ($data['month'][$month]['bills'] as $key => $billValue): ?>
           <tr data-toggle="modal" data-target="#regnskapModal"
-                                                               data-date="<?php echo $billValue['date'];?>"
-                                                               data-desc="<?php echo $billValue['description'];?>"
-                                                               data-sum="<?php echo $billValue['sum'];?>"
-                                                               data-category="<?php echo getCategoryFromId($data, $billValue['category'])['name'];?>"
-                                                               data-categoryid="<?php echo getCategoryFromId($data, $billValue['category'])['id'];?>"
-                                                               data-billid="<?php echo $billValue['id'];?>">
+                                  data-date="<?php echo $billValue['date'];?>"
+                                  data-desc="<?php echo $billValue['description'];?>"
+                                  data-sum="<?php echo $billValue['sum'];?>"
+                                  data-category="<?php echo getCategoryFromId($data, $billValue['category'])['name'];?>"
+                                  data-categoryid="<?php echo getCategoryFromId($data, $billValue['category'])['id'];?>"
+                                  data-billid="<?php echo $billValue['id'];?>">
+
             <td width="<?php echo $dateWidth;?>">
               <?php echo date('d.M', strtotime($billValue['date']));?>
             </td>
@@ -81,6 +83,7 @@
           </tr>
         <?php endforeach; ?>
 
+
       <!--Table row Printing all totals-->
       <tr>
         <th width="<?php echo $dateWidth;?>">Sum</th>
@@ -97,6 +100,7 @@
           <?php echo $total;?>
         </th>
       </tr>
+
 
     <?php else: ?>
       <p>
