@@ -23,12 +23,22 @@ header{
   position: absolute;
   right: 0px;
   top: 0px;
-  padding: 8px;
+}
+
+#user_header .dropdown{
+  padding: 0;
+}
+
+#user_header .dropdown button{
+  padding: 15px;
   color: #ddd;
 }
 
-#user_header:hover{
+#user_header .dropdown button:hover{
   background-color: #22a;
+}
+#user_header .dropdown button:focus{
+  outline-width: 0px;
 }
 
 #user_header > *{

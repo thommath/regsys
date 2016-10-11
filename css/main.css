@@ -30,3 +30,7 @@ img{
 }
 .modal-backdrop.in { z-index: 60;}
 .modal-dialog{z-index: 100;}
+
+.glyphicon{
+  margin: 1px 5px 1px 1px;
+}

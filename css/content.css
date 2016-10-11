@@ -23,9 +23,13 @@
   overflow: auto;
 }
 
+nav{
+  margin-top: -10px;
+}
+
 nav > *{
   display: block;
-  margin: 2px;
+  margin: 7px 2px;
 }
 
 nav a{

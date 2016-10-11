@@ -32,10 +32,10 @@
       <section id="left">
         <section id="menu">
           <nav>
-            <a href="/?p=dashboard">Dashboard</a>
-            <a href="/?p=regnskap">Regnskap</a>
-            <a href="/?p=addBill">Add Bill</a>
-            <a href="/?p=addCategory">Add Category</a>
+            <a href="/?p=dashboard"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>Dashboard</a>
+            <a href="/?p=regnskap"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>Regnskap</a>
+            <a href="/?p=addBill"><span class="glyphicon glyphicon-usd" aria-hidden="true"></span>Add Bill</a>
+            <a href="/?p=addCategory"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>Add Category</a>
           </nav>
         </section>
       </section>
@@ -44,7 +44,7 @@
       <?php if(isset($_SESSION['error'])):?>
         <div class="alert alert-danger alert-dismissible" role="alert">
           <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-
+          <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
         <?php
         //Error message
           foreach ($_SESSION['error'] as $key => $value) {
