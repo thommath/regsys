@@ -21,7 +21,7 @@
 
   <div class="form-group">
     <label for="form-sum" class="col-sm-2 control-label">Sum: </label>
-    <input type="text" name="sum" value=""class="form-control"  placeholder="Eks. 100.32" id="form-sum"></input>
+    <input type="text" name="sum" value=""class="form-control"  placeholder="Eks. 100.32" id="form-sum" step="any"></input>
   </div>
   <div class="form-group">
     <button type="submit" class="btn btn-default">Submit</button>

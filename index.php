@@ -7,6 +7,7 @@
     <title>RegSys</title>
     <script src="js/jquery.js" charset="utf-8"></script>
     <script src="js/bootstrap.min.js" charset="utf-8"></script>
+    <script src="js/autochangeInput.js" charset="utf-8"></script>
     <link rel="stylesheet" href="css/bootstrap.min.css" media="screen" title="no title">
     <link rel="stylesheet" href="css/main.css" media="screen" title="no title">
     <link rel="stylesheet" href="components/header/style.css" media="screen" title="no title">

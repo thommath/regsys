@@ -47,7 +47,7 @@
     <div class="form-group">
       <label for="sum" class="col-sm-2 control-label">Sum </label>
       <div class="col-sm-10">
-        <input type="number" name="sum" value=""class="form-control"  placeholder="Eks. 100.32" id="sum"></input>
+        <input type="number" name="sum" value=""class="form-control"  placeholder="Eks. 100.32" id="sum" step="any"></input>
       </div>
     </div>
 
