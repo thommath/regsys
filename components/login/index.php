@@ -27,4 +27,9 @@
       I don't think I have seen you before? Click here to register
     </p>
   </a>
+  <a href="?p=login/reset">
+    <p>
+      Forgot your password?
+    </p>
+  </a>
 </section>
