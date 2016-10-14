@@ -1,6 +1,6 @@
 <?php
   if(!isset($_GET['key'])){
-    require_once("../index.php");
+    require_once("components/login/reset/index.php");
   }else{
     $conn = getConnection();
 
@@ -27,7 +27,7 @@
             </div>
           </div>
 
-          <input type="hidden" name="id" value="<?php echo $reset['user'];?>">
+          <input type="hidden" name="key" value="<?php echo $_GET['key'];?>">
 
           <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
@@ -42,7 +42,7 @@
         <p>
           Sorry, but the key you are using is either invalid, used or expired. If you want to reset your password get a new link.
         </p>
-        <a class="btn btn-primary btn-lg" href="/?login/reset" role="button">Get link</a>
+        <a class="btn btn-primary btn-lg" href="/?p=login/reset" role="button">Get link</a>
 
       </section>
     <?php endif;
