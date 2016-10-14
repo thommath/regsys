@@ -1,6 +1,3 @@
-<?phpif(isset($_GET["key"])):?>
-
-<?php else;?>
 <section>
   <form action="/components/login/reset/reset.php" method="post" class="form-horizontal">
     <h3>Reset password</h3>
@@ -18,10 +15,4 @@
       </div>
     </div>
   </form>
-  <a href="?p=login/register">
-    <p>
-      I don't think I have seen you before? Click here to register
-    </p>
-  </a>
 </section>
-<?php endif;?>

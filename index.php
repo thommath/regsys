@@ -41,18 +41,25 @@
       </section>
       <section id="center">
 
-      <?php if(isset($_SESSION['error'])):?>
-        <div class="alert alert-danger alert-dismissible" role="alert">
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-        <?php
-        //Error message
-          foreach ($_SESSION['error'] as $key => $value) {
-            echo $value . "\n";
-          }
-        ?>
-        </div>
-        <?php endif;?>
+        <?php if(isset($_SESSION['error'])):?>
+          <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+          <?php
+          //Error message
+            foreach ($_SESSION['error'] as $key => $value) {
+              echo $value . "\n";
+            }
+          ?>
+          </div>
+        <?php unset($_SESSION['error']); endif;?>
+        <?php if(isset($_SESSION['message'])):?>
+          <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <?php echo $_SESSION['message'];?>
+          </div>
+
+          <?php unset($_SESSION['message']); endif;?>
 
         <?php
         //Load component
@@ -76,7 +83,6 @@
           }
         }
         unset($_SESSION['post']);
-        unset($_SESSION['error']);
         unset($_SESSION['from']);
         unset($_SESSION['success']);
         ?>
