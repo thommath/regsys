@@ -24,7 +24,7 @@
   </form>
   <a href="?p=login/register">
     <p>
-      I don't think I have seen you before? Click here to register
+      Click here to register
     </p>
   </a>
   <a href="?p=login/reset">
