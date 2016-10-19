@@ -1,4 +1,3 @@
-<?php
 function getConnection(){
   $servername = "pdb6.awardspace.net";
   $user = "2063185_regsys";
@@ -17,4 +16,3 @@ function protect($string){
   $salt = "A@igqSmNb4CmA8OPKIzY71z(ARcp8_s1";
   return hash("sha256", $salt . $string);
 }
-?>

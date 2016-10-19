@@ -1,5 +1,5 @@
+require_once("components/charts/index.php");
 <?php
-  require_once("components/charts/index.php");
 
   $monthChange = 0;
 

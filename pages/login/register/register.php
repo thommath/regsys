@@ -1,5 +1,5 @@
 <?php
-  require_once("../../../php/essentials.php");
+require_once("dependencies/php/essentials.php");
   session_start();
 
   $conn = getConnection();

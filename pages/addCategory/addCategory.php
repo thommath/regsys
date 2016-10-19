@@ -1,5 +1,5 @@
 <?php
-  require_once("../../php/login.php");
+require_once("dependencies/php/login.php");
   session_start();
 
   $conn = getConnection();

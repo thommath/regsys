@@ -1,7 +1,7 @@
 <?php
-  if(!isset($_GET['key'])){
+  if(!isset($_GET['key'])):?>
     require_once("components/login/reset/index.php");
-  }else{
+  <?php else:?><?php
     $conn = getConnection();
 
     $errorList = [];
@@ -48,3 +48,4 @@
     <?php endif;
   }
 ?>
+<?php endif;?>

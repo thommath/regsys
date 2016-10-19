@@ -1,5 +1,4 @@
-<?php
-require_once("login.php");
+require_once("dependencies/php/login.php");
 
 
 function setupData(){
@@ -228,5 +227,3 @@ function getCategoryFromId($data, $id){
     }
   }
 }
-
-?>
