@@ -6,32 +6,48 @@ def readFile():
 
 def generatePages():
     dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-    print(os.listdir(dir + "/pages"))
     try:
         os.mkdir(dir + "/compiled")
     except Exception as e:
         pass
+    generatePage(dir);
 
-    for page in os.listdir(dir + "/pages"):
+def generatePage(dir, subdir=""):
+    path = dir + "/compiled/" + ((subdir + "/") if subdir != "" else "");
+    for page in os.listdir(dir + "/pages" + (("/" + subdir) if subdir != "" else "")):
         #generate folders and files
-        try:
-            os.mkdir(dir + "/compiled/" + page)
-        except Exception as e:
-            pass
+        if page[len(page)-3:len(page)] == "php":
+            print("making file " + page)
+            file = open(path + page, 'w+')
 
-        file = open(dir + '/compiled/' + page + '/index.php', 'w+')
-        read = open(dir + '/pages/' + page + '/index.php')
-        file.write(read.read())
-        read.close()
-        file.close()
+            if page == "index.php":
+                read = open(dir + "/head.php")
+                file.write(read.read())
+                read.close()
 
+            read = open(dir + "/pages/" + ((subdir + "/") if subdir != "" else "") + page)
+            file.write(read.read())
+            read.close()
 
+            if page == "index.php":
+                read = open(dir + "/footer.php")
+                file.write(read.read())
+                read.close()
 
-
-
-
-
-
+            file.close()
+        elif '.' not in page:
+            try:
+                os.mkdir(path + page)
+            except Exception as e:
+                pass
+            generatePage(dir, subdir+"/"+page if subdir != "" else page)
+        else:
+            print("making file " + page)
+            file = open(path + page, 'w+')
+            read = open(dir + "/pages/" + ((subdir + "/") if subdir != "" else "") + page)
+            file.write(read.read())
+            read.close()
+            file.close()
 
 
 def main(args):
