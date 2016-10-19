@@ -21,9 +21,7 @@ def generatePages():
 
         file = open(dir + '/compiled/' + page + '/index.php', 'w+')
         read = open(dir + '/pages/' + page + '/index.php')
-#        file.write()
-        print(read.read())
-#        file.write(read.read())
+        file.write(read.read())
         read.close()
         file.close()
 
