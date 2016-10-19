@@ -7,21 +7,26 @@
     $monthChange = $_GET['month'];
   }
   $data = $_SESSION['data'];
-//  $totalMonthIncomeData = getTotalIncome($monthIncome);
-//  $totalMonthUsageData = getTotalUsage($monthUsage);
-//  $stack = getStack($categories);
-//  var_dump($categories);
+  $month = calculateMonth($monthChange);
+
+  $showMonth = false;
 ?>
 
-<section>
-  <section class="nav-month">
-    <a href="<?php echo "?p=dashboard&month=" . (intval($monthChange)-1);?>"><span class="glyphicon glyphicon-arrow-left btn-lg" aria-hidden="true"></span></a>
-    <h3 class="center-block"><?php echo monthToString($monthChange);?></h3>
-    <a href="<?php echo "?p=dashboard&month=" . (intval($monthChange)+1);?>"><span class="glyphicon glyphicon-arrow-right btn-lg" aria-hidden="true"></span></a>
-  </section>
+<section id="dashboard">
 
-  <canvas id="doubleChart"></canvas>
-  <canvas id="yearChart"></canvas>
+  <?php
+    echo "Difference: " . ($data['month'][$month]['income']-$data['month'][$month]['usage']) . "<br>";
+  //  echo "Difference: " . ($data['month'][$month]['income']-$data['month'][$month]['usage']) . "<br>";
+  ?>
+
+  <?php if($showMonth):?>
+    <section class="nav-month">
+      <a href="<?php echo "?p=dashboard&month=" . (intval($monthChange)-1);?>"><span class="glyphicon glyphicon-arrow-left btn-lg" aria-hidden="true"></span></a>
+      <h3 class="center-block"><?php echo monthToString($monthChange);?></h3>
+      <a href="<?php echo "?p=dashboard&month=" . (intval($monthChange)+1);?>"><span class="glyphicon glyphicon-arrow-right btn-lg" aria-hidden="true"></span></a>
+    </section>
+  <?php endif;?>
+
 </section>
 
 
@@ -37,10 +42,31 @@ var options = {
     }
   };
 
-//var usageChartElement = document.getElementById("usageChart");
-//var incomeChartElement = document.getElementById("incomeChart");
-var yearChartElement = document.getElementById("yearChart");
-var doubleChartElement = document.getElementById("doubleChart");
+//Month
+<?php if(sanitizeUsageTwo($data['month'][calculateMonth($monthChange)]['categories'], 'income', 'usage') != null && $showMonth):?>
+var monthCanvas = document.createElement('canvas');
+monthCanvas.id = "yearChart";
+document.getElementById('dashboard').appendChild(monthCanvas);
+var doubleChart = new Chart(monthCanvas, {
+    type: 'bar',
+    data: {
+        labels: ["Usage", "Income"],
+        datasets: [
+          <?php foreach (sanitizeUsageTwo($data['month'][calculateMonth($monthChange)]['categories'], 'income', 'usage') as $key => $value): ?>
+          {
+            label: ["<?php echo html_entity_decode($value['name']);?>"],
+            data: [<?php echo $value['usage'] . ", " . $value['income'];?>],
+            backgroundColor: "<?php echo $value['colors'][0]?>",
+            borderColor: "<?php echo $value['colors'][1];?>",
+            borderWidth: 1
+        } ,
+        <?php endforeach; ?>
+      ]
+    },
+    options: options
+});
+<?php endif;?>
+
 
 //Year
 <?php
@@ -52,7 +78,10 @@ var doubleChartElement = document.getElementById("doubleChart");
 ?>
 
 <?php if($data[month] != null):?>
-var yearChart = new Chart(yearChartElement, {
+var yearCanvas = document.createElement('canvas');
+yearCanvas.id = "yearChart";
+document.getElementById('dashboard').appendChild(yearCanvas);
+var yearChart = new Chart(yearCanvas, {
     type: 'line',
     data: {
         labels: <?php echo arrayKeyToString($data['month'], true);?>,
@@ -87,28 +116,5 @@ var yearChart = new Chart(yearChartElement, {
     options: options
 });
 <?php endif;?>
-
-//Month
-<?php if(sanitizeUsageTwo($data['month'][calculateMonth($monthChange)]['categories'], 'income', 'usage') != null):?>
-var doubleChart = new Chart(doubleChartElement, {
-    type: 'bar',
-    data: {
-        labels: ["Usage", "Income"],
-        datasets: [
-          <?php foreach (sanitizeUsageTwo($data['month'][calculateMonth($monthChange)]['categories'], 'income', 'usage') as $key => $value): ?>
-          {
-            label: ["<?php echo html_entity_decode($value['name']);?>"],
-            data: [<?php echo $value['usage'] . ", " . $value['income'];?>],
-            backgroundColor: "<?php echo $value['colors'][0]?>",
-            borderColor: "<?php echo $value['colors'][1];?>",
-            borderWidth: 1
-        } ,
-        <?php endforeach; ?>
-      ]
-    },
-    options: options
-});
-<?php endif;?>
-
 
 </script>
