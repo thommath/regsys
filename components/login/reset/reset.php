@@ -1,5 +1,5 @@
 <?php
-  require_once("../../../php/login.php");
+require_once("dependencies/php/login.php");
   session_start();
   $conn = getConnection();
 
@@ -12,7 +12,7 @@
     $_SESSION['success'] = false;
     $_SESSION['error'] = $errorList;
     $_SESSION['post'] = $_POST;
-    header("Location: http://" . $_SERVER['SERVER_NAME'] . "?p=login/reset", true);
+    header("Location: http://" . $_SERVER['SERVER_NAME'] . "/login/reset", true);
     die();
   }else{
     foreach ($_POST as $key => $value) {
@@ -26,7 +26,7 @@
       $key = protect(rand(0, 999999)) . protect(rand(0, 999999));
       $result = $conn->query("INSERT INTO `ResetPassword` (`link_key`, `link_limit`, `user`) VALUES ('" . $key . "', '" . date("Y-m-d", strtotime("+1 days")) . "', '" . $user['id'] . "')");
 
-      mail($user['email'], "Password reset Regsys", "<h2>Hi!</h2><br><br>You have asked for a password reset for your account at Regsys. If you didn't, just ignore this. <br><br><a href=\"http://regsys.raptorphoto.com/?p=login/reset/updatePassword&key=" . $key . "\">Click here</a><br><br>From team Regsys", "Content-Type: text/html; charset=ISO-8859-1\r\n");
+      mail($user['email'], "Password reset Regsys", "<h2>Hi!</h2><br><br>You have asked for a password reset for your account at Regsys. If you didn't, just ignore this. <br><br><a href=\"http://regsys.raptorphoto.com//login/reset/updatePassword&key=" . $key . "\">Click here</a><br><br>From team Regsys", "Content-Type: text/html; charset=ISO-8859-1\r\n");
 
       $_SESSION['success'] = true;
       $_SESSION['message'] = "A reset link is sent to your email address";
@@ -37,7 +37,7 @@
       $_SESSION['success'] = false;
       $_SESSION['error'] = $errorList;
       $_SESSION['post'] = $_POST;
-      header("Location: http://" . $_SERVER['SERVER_NAME'] . "?p=login/reset", true);
+      header("Location: http://" . $_SERVER['SERVER_NAME'] . "/login/reset", true);
       die();
     }
     die();

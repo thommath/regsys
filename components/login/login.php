@@ -1,5 +1,5 @@
 <?php
-  require_once("../../php/login.php");
+require_once("dependencies/php/login.php");
   session_start();
   $conn = getConnection();
 
@@ -12,7 +12,7 @@
     $_SESSION['success'] = false;
     $_SESSION['error'] = $errorList;
     $_SESSION['post'] = $_POST;
-    header("Location: http://" . $_SERVER['SERVER_NAME'] . "?p=login", true);
+    header("Location: http://" . $_SERVER['SERVER_NAME'] . "/login", true);
     die();
   }else{
     foreach ($_POST as $key => $value) {
@@ -33,7 +33,7 @@
       $_SESSION['success'] = false;
       $_SESSION['error'] = $errorList;
       $_SESSION['post'] = $_POST;
-      header("Location: http://" . $_SERVER['SERVER_NAME'] . "?p=login", true);
+      header("Location: http://" . $_SERVER['SERVER_NAME'] . "/login", true);
       die();
     }
     die();
