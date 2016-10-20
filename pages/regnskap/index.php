@@ -1,4 +1,4 @@
-dep:regnskap.js;style.css;
+dep:regnskap.js;style.css;modal.php;
 <?php
   $conn = getConnection();
 
@@ -21,9 +21,9 @@ dep:regnskap.js;style.css;
 <section id="regnskap">
 
   <section class="nav-month">
-    <a href="/regnskap&month=<?php echo (intval($monthChange)-1);?>"><span class="glyphicon glyphicon-arrow-left btn-lg" aria-hidden="true"></span></a>
+    <a href="?month=<?php echo (intval($monthChange)-1);?>"><span class="glyphicon glyphicon-arrow-left btn-lg" aria-hidden="true"></span></a>
     <h3 class="center-block"><?php echo monthToString($monthChange);?></h3>
-    <a href="/regnskap&month=<?php echo (intval($monthChange)+1);?>"><span class="glyphicon glyphicon-arrow-right btn-lg" aria-hidden="true"></span></a>
+    <a href="?&month=<?php echo (intval($monthChange)+1);?>"><span class="glyphicon glyphicon-arrow-right btn-lg" aria-hidden="true"></span></a>
   </section>
 
   <table class="table table-striped table-bordered">

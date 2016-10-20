@@ -25,7 +25,7 @@ def generatePage(dir, subdir=""):
             content = read.read()
 
             #Checking for dependencies
-            dep = [[],[]]
+            dep = [[],[],[]]
             if content[0:4] == "dep:":
                 temp = ""
                 length = 4
@@ -38,6 +38,8 @@ def generatePage(dir, subdir=""):
                             dep[0].append(temp)
                         if temp[len(temp)-2:len(temp)] == "js":
                             dep[1].append(temp)
+                        if temp[len(temp)-3:len(temp)] == "php":
+                            dep[2].append(temp)
                         temp = ""
                     else:
                         temp += c
@@ -56,10 +58,16 @@ def generatePage(dir, subdir=""):
                 js = ""
                 for javascript in dep[1]:
                     js += "<script src=\"" + javascript + "\" charset=\"utf-8\"></script>\n"
+                php = ""
+                for personahomepage in dep[2]:
+                    fil = open(path + personahomepage)
+                    php += fil.read() + "\n";
+                    fil.close()
 
                 template = template.replace("<!--style-->", css)
                 template = template.replace("<!--js-->", js)
                 template = template.replace("<!--content-->", content)
+                template = template.replace("<!--php-->", php)
 
                 content = template
 
@@ -111,7 +119,6 @@ def upload(to=""):
         pass
 
     ftp.cwd(to)
-    ftp.dir()
     uploadFile(ftp, dir+"/compiled/")
     ftp.cwd(data['remote'])
     uploadFile(ftp, dir + "/", "dependencies")

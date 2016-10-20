@@ -2,7 +2,7 @@
 
 <section>
   <h3>Add Bill</h3>
-  <form class="form-horizontal" action="addBill.php" method="post">
+  <form class="form-horizontal" action="submitAddBill.php" method="post">
     <div class="form-group">
       <label for="date" class="col-sm-2 control-label">Date </label>
       <div class="col-sm-10">

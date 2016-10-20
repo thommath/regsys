@@ -73,5 +73,6 @@
     <script src="/dependencies/js/jquery.js" charset="utf-8"></script>
     <script src="/dependencies/js/bootstrap.min.js" charset="utf-8"></script>
     <!--js-->
+    <!--php-->
   </body>
 </html>
