@@ -1,5 +1,4 @@
 <?php
-require_once("dependencies/php/login.php");
 $conn = getConnection();
 $user = $conn->query("SELECT * FROM User WHERE `id`=" . $_SESSION['user'])->fetch_assoc();
 

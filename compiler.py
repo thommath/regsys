@@ -1,4 +1,5 @@
-import os, inspect, sys, re
+import os, inspect, sys, re, json
+from ftplib import FTP
 
 def readFile():
     pass
@@ -25,7 +26,7 @@ def generatePage(dir, subdir=""):
 
             #Checking for dependencies
             dep = [[],[]]
-            if content[0:3] == "dep:":
+            if content[0:4] == "dep:":
                 temp = ""
                 length = 4
                 for c in content[4:]:
@@ -54,7 +55,7 @@ def generatePage(dir, subdir=""):
                     css += "<link rel=\"stylesheet\" href=" + style + ">\n"
                 js = ""
                 for javascript in dep[1]:
-                    js += "<script src=" + javascript + " charset=\"utf-8\"></script>\n"
+                    js += "<script src=\"" + javascript + "\" charset=\"utf-8\"></script>\n"
 
                 template = template.replace("<!--style-->", css)
                 template = template.replace("<!--js-->", js)
@@ -63,6 +64,7 @@ def generatePage(dir, subdir=""):
                 content = template
 
             content = insertDependencies(dir, content)
+#            content = replaceRefs(content)
             file.write(content)
 
             file.close()
@@ -86,7 +88,57 @@ def insertDependencies(dir, content):
         content = content.replace("require_once(\"" + require + "\");", insertDependencies(dir, read.read()))
     return content
 
+def replaceRefs(content):
+    for href in re.findall("href=\"\/(.*)\"", content):
+        content = content.replace("href=\"/" + href + "\"", "href=\"/beta/" + href + "\"")
+    for src in re.findall("src=\"\/(.*)\"", content):
+        content = content.replace("src=\"/" + src + "\"", "src=\"/beta/" + src + "\"")
+    return content
+
+
+def upload(to=""):
+    dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+    json_file = open(".ftpconfig")
+    data = json.load(json_file)
+    ftp = FTP(data['host'])
+    ftp.login(data['user'], data['pass'])
+
+    ftp.cwd(data['remote'])
+
+    try:
+        ftp.mkd(to)
+    except Exception as e:
+        pass
+
+    ftp.cwd(to)
+    ftp.dir()
+    uploadFile(ftp, dir+"/compiled/")
+    ftp.cwd(data['remote'])
+    uploadFile(ftp, dir + "/", "dependencies")
+    uploadFile(ftp, dir + "/", "components")
+    ftp.close()
+
+def uploadFile(ftp, dir, file="", wd=""):
+    path = dir + wd + file;
+    if "." in file:
+        print("Uploading file " + file)
+        fil = open(path, 'rb')
+        ftp.storbinary("STOR " + file, fil)
+        fil.close()
+    else:
+        try:
+            print("Making dir " + file)
+            ftp.mkd(file)
+        except Exception as e:
+            pass
+        ftp.cwd(file)
+        wd += file+"/"
+        for page in os.listdir(path):
+            uploadFile(ftp, dir, page, wd)
+        ftp.cwd("..")
+
 def main(args):
     generatePages()
+    upload()
 
 main(sys.argv)

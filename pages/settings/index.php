@@ -1,7 +1,7 @@
 <section>
   <h3>Settings</h3>
 
-  <form class="form-horizontal" action="/components/settings/editSettings.php" method="post">
+  <form class="form-horizontal" action="editSettings.php" method="post">
     <div class="form-group">
       <label for="startDay" class="col-sm-2 control-label">Startday </label>
       <div class="col-sm-10">

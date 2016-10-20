@@ -21,9 +21,9 @@ require_once("components/charts/index.php");
 
   <?php if($showMonth):?>
     <section class="nav-month">
-      <a href="<?php echo "?p=dashboard&month=" . (intval($monthChange)-1);?>"><span class="glyphicon glyphicon-arrow-left btn-lg" aria-hidden="true"></span></a>
+      <a href="/regnskap&month=<?php echo (intval($monthChange)-1);?>"><span class="glyphicon glyphicon-arrow-left btn-lg" aria-hidden="true"></span></a>
       <h3 class="center-block"><?php echo monthToString($monthChange);?></h3>
-      <a href="<?php echo "?p=dashboard&month=" . (intval($monthChange)+1);?>"><span class="glyphicon glyphicon-arrow-right btn-lg" aria-hidden="true"></span></a>
+      <a href="/regnskap&month=<?php echo (intval($monthChange)+1);?>"><span class="glyphicon glyphicon-arrow-right btn-lg" aria-hidden="true"></span></a>
     </section>
   <?php endif;?>
 

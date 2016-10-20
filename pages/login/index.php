@@ -1,5 +1,5 @@
 <section>
-  <form action="/components/login/login.php" method="post" class="form-horizontal">
+  <form action="login.php" method="post" class="form-horizontal">
     <h3>Log In</h3>
 
     <div class="form-group">

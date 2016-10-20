@@ -1,3 +1,9 @@
+session_start();
+if(!isset($_SESSION['user']) && !startsWith($_SERVER['REQUEST_URI'], "/login")){
+  header("Location: http://" . $_SERVER['SERVER_NAME'] . "/login", true);
+  die();
+}
+
 require_once("dependencies/php/login.php");
 
 

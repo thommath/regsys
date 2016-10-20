@@ -12,7 +12,7 @@ require_once("dependencies/php/login.php");
       $_SESSION['success'] = false;
       $_SESSION['error'] = $errorList;
       $_SESSION['post'] = $_POST;
-      header("Location: http://" . $_SERVER['SERVER_NAME'] . "?p=settings", true);
+      header("Location: http://" . $_SERVER['SERVER_NAME'] . "/settings", true);
       die();
   }else{
     foreach ($_POST as $key => $value) {
@@ -27,12 +27,12 @@ require_once("dependencies/php/login.php");
         $_SESSION['success'] = false;
         $_SESSION['error'] = $errorList;
         $_SESSION['post'] = $_POST;
-        header("Location: http://" . $_SERVER['SERVER_NAME'] . "?p=settings", true);
+        header("Location: http://" . $_SERVER['SERVER_NAME'] . "/settings", true);
         die();
     }else{
         $_SESSION['from'] = 'editSettings';
         $_SESSION['success'] = true;
-        header("Location: http://" . $_SERVER['SERVER_NAME'] . "?p=settings", true);
+        header("Location: http://" . $_SERVER['SERVER_NAME'] . "/settings", true);
         die();
     }
   }

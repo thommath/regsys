@@ -1,5 +1,5 @@
 <section>
-  <form action="/components/login/reset/reset.php" method="post" class="form-horizontal">
+  <form action="reset.php" method="post" class="form-horizontal">
     <h3>Reset password</h3>
 
     <div class="form-group">

@@ -1,4 +1,4 @@
-<?php require_once("dependencies/php/essentials.php");session_start();?>
+<?php require_once("dependencies/php/essentials.php");?>
 
 <!DOCTYPE html>
 <html>
@@ -27,10 +27,10 @@
       <section id="left">
         <section id="menu">
           <nav>
-            <a href="/?p=dashboard"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>Dashboard</a>
-            <a href="/?p=regnskap"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>Regnskap</a>
-            <a href="/?p=addBill"><span class="glyphicon glyphicon-usd" aria-hidden="true"></span>Add Bill</a>
-            <a href="/?p=addCategory"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>Add Category</a>
+            <a href="/dashboard"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>Dashboard</a>
+            <a href="/regnskap"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>Regnskap</a>
+            <a href="/addBill"><span class="glyphicon glyphicon-usd" aria-hidden="true"></span>Add Bill</a>
+            <a href="/addCategory"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>Add Category</a>
           </nav>
         </section>
       </section>
@@ -56,6 +56,10 @@
 
           <?php unset($_SESSION['message']); endif;?>
 
+          <?php if(isset($_SESSION['user']) && (!isset($_SESSION['data']) || $_SESSION['success'] == true)){
+              setupData();
+            } ?>
+
           <!--content-->
 
         <?php
@@ -65,7 +69,7 @@
         ?>
       </section>
     </section>
-    <?php if(isset($_GET['p']) && $_GET['p'] == 'regnskap'):?>require_once("components/regnskap/modal.php");<?php endif;?>
+    <?php if(isset($_GET['p']) && $_GET['p'] == 'regnskap'):?>require_once("pages/regnskap/modal.php");<?php endif;?>
     <script src="/dependencies/js/jquery.js" charset="utf-8"></script>
     <script src="/dependencies/js/bootstrap.min.js" charset="utf-8"></script>
     <!--js-->

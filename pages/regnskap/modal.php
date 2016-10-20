@@ -14,7 +14,7 @@
           <strong>Sum: </strong><p id="modal-sum"></p>
         </div>
 
-        <form id="editForm" action="/components/editBill/editBill.php" method="post"  class="modal-hidden">
+        <form id="editForm" action="/editBill/editBill.php" method="post"  class="modal-hidden">
           <div class="form-group">
             <label for="form-date" class="col-sm-2 control-label">Date: </label>
             <input type="date" name="date" id="form-date" class="form-control" value=""></input>

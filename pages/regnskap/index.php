@@ -1,3 +1,4 @@
+dep:regnskap.js;style.css;
 <?php
   $conn = getConnection();
 
@@ -18,11 +19,11 @@
 
 
 <section id="regnskap">
-  
+
   <section class="nav-month">
-    <a href="<?php echo "?p=regnskap&month=" . (intval($monthChange)-1);?>"><span class="glyphicon glyphicon-arrow-left btn-lg" aria-hidden="true"></span></a>
+    <a href="/regnskap&month=<?php echo (intval($monthChange)-1);?>"><span class="glyphicon glyphicon-arrow-left btn-lg" aria-hidden="true"></span></a>
     <h3 class="center-block"><?php echo monthToString($monthChange);?></h3>
-    <a href="<?php echo "?p=regnskap&month=" . (intval($monthChange)+1);?>"><span class="glyphicon glyphicon-arrow-right btn-lg" aria-hidden="true"></span></a>
+    <a href="/regnskap&month=<?php echo (intval($monthChange)+1);?>"><span class="glyphicon glyphicon-arrow-right btn-lg" aria-hidden="true"></span></a>
   </section>
 
   <table class="table table-striped table-bordered">
@@ -109,27 +110,3 @@
     <?php endif;?>
   </table>
 </section>
-
-<script type="text/javascript">
-$(document).ready(function() {
-// Tooltip only Text
-$('.masterTooltip').hover(function(){
-        // Hover over code
-        var title = $(this).attr('title');
-        $(this).data('tipText', title).removeAttr('title');
-        $('<p class="desc"></p>')
-        .text(title)
-        .appendTo('body')
-        .fadeIn('slow');
-}, function() {
-        // Hover out code
-        $(this).attr('title', $(this).data('tipText'));
-        $('.desc').remove();
-}).mousemove(function(e) {
-        var mousex = e.pageX + 20; //Get X coordinates
-        var mousey = e.pageY + 10; //Get Y coordinates
-        $('.desc')
-        .css({ top: mousey, left: mousex })
-});
-});
-</script>

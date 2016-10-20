@@ -1,6 +1,6 @@
 <?php
   if(!isset($_GET['key'])):?>
-    require_once("components/login/reset/index.php");
+    require_once("pages/login/reset/index.php");
   <?php else:?><?php
     $conn = getConnection();
 
@@ -42,7 +42,7 @@
         <p>
           Sorry, but the key you are using is either invalid, used or expired. If you want to reset your password get a new link.
         </p>
-        <a class="btn btn-primary btn-lg" href="/?p=login/reset" role="button">Get link</a>
+        <a class="btn btn-primary btn-lg" href="/login/reset" role="button">Get link</a>
 
       </section>
     <?php endif;

@@ -1,4 +1,2 @@
 
-<section>
-  <h2>Hello!</h2>
-</section>
+require_once("pages/dashboard/index.php");

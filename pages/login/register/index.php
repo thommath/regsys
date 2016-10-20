@@ -1,5 +1,5 @@
 <section>
-  <form action="/components/<?php echo $_GET['p'];?>/register.php" method="post" class="form-horizontal">
+  <form action="register.php" method="post" class="form-horizontal">
     <h3>Register</h3>
 
     <div class="form-group">

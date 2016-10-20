@@ -39,7 +39,7 @@ require_once("dependencies/php/essentials.php");
     $_SESSION['success'] = false;
     $_SESSION['error'] = $errorList;
     $_SESSION['post'] = $_POST;
-    header("Location: http://" . $_SERVER['SERVER_NAME'] . "?p=login/register", true);
+    header("Location: http://" . $_SERVER['SERVER_NAME'] . "/login/register", true);
     die();
   }else{
     $accepted = $conn->query("INSERT INTO `User`(`username`, `password`, `firstname`, `lastname`, `gender`, `email`, `birthday`) VALUES ('" . $_POST['username'] . "', '" . $_POST['password'] . "', '" . $_POST['firstname'] . "', '" . $_POST['lastname'] . "', '" . $_POST['gender'] . "', '" . $_POST['email'] . "', '" . $_POST['birthday'] . "')");
@@ -50,7 +50,7 @@ require_once("dependencies/php/essentials.php");
       $_SESSION['success'] = false;
       $_SESSION['error'] = $errorList;
       $_SESSION['post'] = $_POST;
-      header("Location: http://" . $_SERVER['SERVER_NAME'] . "?p=login/register", true);
+      header("Location: http://" . $_SERVER['SERVER_NAME'] . "/login/register", true);
       die();
     }
     $user = $conn->query("SELECT `id` FROM User WHERE `username`='" . $_POST['username'] . "'")->fetch_assoc();

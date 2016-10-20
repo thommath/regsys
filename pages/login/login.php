@@ -12,7 +12,7 @@ require_once("dependencies/php/login.php");
     $_SESSION['success'] = false;
     $_SESSION['error'] = $errorList;
     $_SESSION['post'] = $_POST;
-    header("Location: http://" . $_SERVER['SERVER_NAME'] . "?p=login", true);
+    header("Location: http://" . $_SERVER['SERVER_NAME'] . "/login", true);
     die();
   }else{
     foreach ($_POST as $key => $value) {
@@ -33,7 +33,7 @@ require_once("dependencies/php/login.php");
       $_SESSION['success'] = false;
       $_SESSION['error'] = $errorList;
       $_SESSION['post'] = $_POST;
-      header("Location: http://" . $_SERVER['SERVER_NAME'] . "?p=login", true);
+      header("Location: http://" . $_SERVER['SERVER_NAME'] . "/login", true);
       die();
     }
     die();
