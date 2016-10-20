@@ -69,7 +69,7 @@
         ?>
       </section>
     </section>
-    <?php if(isset($_GET['p']) && $_GET['p'] == 'regnskap'):?>require_once("pages/regnskap/modal.php");<?php endif;?>
+    <?php if(isset($_GET['p']) && $_GET['p'] == 'regnskap'):?>require_once("components/regnskap/modal.php");<?php endif;?>
     <script src="/dependencies/js/jquery.js" charset="utf-8"></script>
     <script src="/dependencies/js/bootstrap.min.js" charset="utf-8"></script>
     <!--js-->

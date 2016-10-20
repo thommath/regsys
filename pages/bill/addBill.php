@@ -1,5 +1,3 @@
-
-
 <section>
   <h3>Add Bill</h3>
   <form class="form-horizontal" action="submitAddBill.php" method="post">
