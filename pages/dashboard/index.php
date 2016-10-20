@@ -43,7 +43,7 @@ var options = {
   };
 
 //Month
-<?php if(sanitizeUsageTwo($data['month'][calculateMonth($monthChange)]['categories'], 'income', 'usage') != null && $showMonth):?>
+<?php if(isset($data['month'][calculateMonth($monthChange)]['categories']) && sanitizeUsageTwo($data['month'][calculateMonth($monthChange)]['categories'], 'income', 'usage') != null && $showMonth):?>
 var monthCanvas = document.createElement('canvas');
 monthCanvas.id = "yearChart";
 document.getElementById('dashboard').appendChild(monthCanvas);

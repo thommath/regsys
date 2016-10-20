@@ -46,7 +46,7 @@ def generatePage(dir, subdir=""):
                 content = content[length:]
 
             #Use file template instead
-            if page == "index.php":
+            if page[0:6] != "submit" and page[len(page)-3:] == "php":
                 read = open(dir + "/template.php")
                 template = read.read()
                 read.close()
@@ -143,6 +143,9 @@ def uploadFile(ftp, dir, file="", wd=""):
         for page in os.listdir(path):
             uploadFile(ftp, dir, page, wd)
         ftp.cwd("..")
+
+def testing():
+    phperror = "<br />\n<b>Warning</b>:"
 
 def main(args):
     generatePages()
