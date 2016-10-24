@@ -1,4 +1,4 @@
-import os, inspect, sys, re, json
+import os, inspect, sys, re, json, shutil, ftplib
 from ftplib import FTP
 
 def readFile():
@@ -9,7 +9,9 @@ def generatePages():
     try:
         os.mkdir(dir + "/compiled")
     except Exception as e:
-        pass
+        print("Deleting compiled folder")
+        shutil.rmtree(dir + "/compiled")
+        os.mkdir(dir + "/compiled")
     print("Generating components")
     generateComponents(dir)
     print("Done with components")
@@ -147,6 +149,8 @@ def upload(folder="testing"):
 
     ftp.cwd(data[folder])
 
+    FtpRmTree(ftp, "")
+
     uploadFile(ftp, dir+"/compiled/")
     ftp.cwd(data[folder])
     uploadFile(ftp, dir + "/", "dependencies")
@@ -171,6 +175,31 @@ def uploadFile(ftp, dir, file="", wd=""):
         for page in os.listdir(path):
             uploadFile(ftp, dir, page, wd)
         ftp.cwd("..")
+
+def FtpRmTree(ftp, path):
+    #"""Recursively delete a directory tree on a remote server."""
+    wd = ftp.pwd()
+
+    try:
+        names = ftp.nlst(path)
+    except ftplib.all_errors as e:
+        # some FTP servers complain when you try and list non-existent paths
+        return
+
+    for name in names:
+        if os.path.split(name)[1] in ('.', '..'): continue
+
+        try:
+            ftp.cwd(name)  # if we can cwd to it, it's a folder
+            ftp.cwd(wd)  # don't try a nuke a folder we're in
+            FtpRmTree(ftp, name)
+        except ftplib.all_errors:
+            ftp.delete(name)
+
+    try:
+        ftp.rmd(path)
+    except ftplib.all_errors as e:
+        print('FtpRmTree: Could not remove {0}: {1}'.format(path, e))
 
 def testing():
     phperror = "<br />\n<b>Warning</b>:"
