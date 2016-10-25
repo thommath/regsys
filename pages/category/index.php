@@ -2,7 +2,7 @@
 
 <section>
   <h3>Add Category</h3>
-  <form class="form-horizontal" action="addCategory.php" method="post">
+  <form class="form-horizontal" action="submitAddCategory.php" method="post">
     <div class="form-group">
       <label for="name" class="col-sm-2 control-label">Name</label>
       <div class="col-sm-10">

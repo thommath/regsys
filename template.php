@@ -29,8 +29,8 @@
           <nav>
             <a href="/dashboard"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>Dashboard</a>
             <a href="/regnskap"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>Regnskap</a>
-            <a href="/addBill"><span class="glyphicon glyphicon-usd" aria-hidden="true"></span>Add Bill</a>
-            <a href="/addCategory"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>Add Category</a>
+            <a href="/bill"><span class="glyphicon glyphicon-usd" aria-hidden="true"></span>Add Bill</a>
+            <a href="/category"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>Add Category</a>
           </nav>
         </section>
       </section>

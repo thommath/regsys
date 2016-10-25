@@ -1,11 +1,11 @@
-import os, inspect, sys, re, json, shutil, ftplib
-from ftplib import FTP
+import os, re, sys, inspect, shutil
+import test
+import upload
 
 def readFile():
     pass
 
-def generatePages():
-    dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+def generatePages(dir):
     try:
         os.mkdir(dir + "/compiled")
     except Exception as e:
@@ -17,6 +17,8 @@ def generatePages():
     print("Done with components")
     generatePage(dir);
     print("Done with pages")
+    shutil.copytree(dir + "/dependencies", dir + "/compiled/dependencies")
+    shutil.copytree(dir + "/components", dir + "/compiled/components")
 
 def generateComponents(dir, subdir=""):
     path = dir + "/compiled/" + ((subdir + "/") if subdir != "" else "");
@@ -132,83 +134,21 @@ def insertDependencies(dir, content):
         content = content.replace("require_once(\"" + require + "\");", insertDependencies(dir, read.read()))
     return content
 
-def replaceRefs(content):
-    for href in re.findall("href=\"\/(.*)\"", content):
-        content = content.replace("href=\"/" + href + "\"", "href=\"/beta/" + href + "\"")
-    for src in re.findall("src=\"\/(.*)\"", content):
-        content = content.replace("src=\"/" + src + "\"", "src=\"/beta/" + src + "\"")
-    return content
-
-
-def upload(folder="testing"):
+def main(args):
     dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-    json_file = open(".ftpconfig")
-    data = json.load(json_file)
-    ftp = FTP(data['host'])
-    ftp.login(data['user'], data['pass'])
 
-    ftp.cwd(data[folder])
+    generatePages(dir)
 
-    FtpRmTree(ftp, "")
-
-    uploadFile(ftp, dir+"/compiled/")
-    ftp.cwd(data[folder])
-    uploadFile(ftp, dir + "/", "dependencies")
-    uploadFile(ftp, dir + "/", "components")
-    ftp.close()
-
-def uploadFile(ftp, dir, file="", wd=""):
-    path = dir + wd + file;
-    if "." in file:
-        print("Uploading file " + file)
-        fil = open(path, 'rb')
-        ftp.storbinary("STOR " + file, fil)
-        fil.close()
+    print("Starting tests")
+    if test.run(dir+"/compiled", dir+"/compiled"):
+        print("Completed tests")
     else:
-        try:
-            print("Making dir " + file)
-            ftp.mkd(file)
-        except Exception as e:
-            pass
-        ftp.cwd(file)
-        wd += file+"/"
-        for page in os.listdir(path):
-            uploadFile(ftp, dir, page, wd)
-        ftp.cwd("..")
-
-def FtpRmTree(ftp, path):
-    #"""Recursively delete a directory tree on a remote server."""
-    wd = ftp.pwd()
-
-    try:
-        names = ftp.nlst(path)
-    except ftplib.all_errors as e:
-        # some FTP servers complain when you try and list non-existent paths
+        print("Not uploaded, failed test")
         return
 
-    for name in names:
-        if os.path.split(name)[1] in ('.', '..'): continue
-
-        try:
-            ftp.cwd(name)  # if we can cwd to it, it's a folder
-            ftp.cwd(wd)  # don't try a nuke a folder we're in
-            FtpRmTree(ftp, name)
-        except ftplib.all_errors:
-            ftp.delete(name)
-
-    try:
-        ftp.rmd(path)
-    except ftplib.all_errors as e:
-        print('FtpRmTree: Could not remove {0}: {1}'.format(path, e))
-
-def testing():
-    phperror = "<br />\n<b>Warning</b>:"
-
-def main(args):
-    generatePages()
+    print("Starting upload")
     if(len(args) > 1 and args[1] == "prodset"):
-        upload("real")
+        upload.upload("real")
     else:
-        upload()
-
+        upload.upload()
 main(sys.argv)
