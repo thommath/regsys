@@ -1,4 +1,4 @@
-dep:regnskap.js;style.css;modal.php;
+dep:regnskap.js;style.css;modalBill.php;modalCategory.php;
 <?php
   $conn = getConnection();
 
@@ -32,7 +32,14 @@ dep:regnskap.js;style.css;modal.php;
       <tr>
         <th width="<?php echo $dateWidth;?>">Date</th>
         <?php foreach ($data['categories'] as $key => $value):?>
-          <th width="<?php echo $width;?>">
+          <th width="<?php echo $width;?>"
+                                  class="masterTooltip"
+                                  title="<?php echo $value['description'];?>"
+                                  data-toggle="modal"
+                                  data-target="#categoryModal"
+                                  data-name="<?php echo $value['name'];?>"
+                                  data-desc="<?php echo $value['description'];?>"
+                                  data-categoryid="<?php echo $value['id'];?>">
             <?php echo $value['name'];?>
           </th>
         <?php endforeach;?>
@@ -57,13 +64,7 @@ dep:regnskap.js;style.css;modal.php;
 
       <!--Table row Printing all bills-->
         <?php foreach ($data['month'][$month]['bills'] as $key => $billValue): ?>
-          <tr data-toggle="modal" data-target="#regnskapModal"
-                                  data-date="<?php echo $billValue['date'];?>"
-                                  data-desc="<?php echo $billValue['description'];?>"
-                                  data-sum="<?php echo $billValue['sum'];?>"
-                                  data-category="<?php echo getCategoryFromId($data, $billValue['category'])['name'];?>"
-                                  data-categoryid="<?php echo getCategoryFromId($data, $billValue['category'])['id'];?>"
-                                  data-billid="<?php echo $billValue['id'];?>">
+          <tr>
 
             <td width="<?php echo $dateWidth;?>">
               <?php echo date('d.M', strtotime($billValue['date']));?>
@@ -72,7 +73,14 @@ dep:regnskap.js;style.css;modal.php;
 
               <?php if($billValue['category'] == $categoryValue['id']):?>
                 <td width="<?php echo $width;?>" class="masterTooltip <?php if($billValue['sum'] < 0){echo "negative";}?>"
-                                                                     title="<?php echo $billValue['description'];?>">
+                                                                    title="<?php echo $billValue['description'];?>"
+                                                                    data-toggle="modal" data-target="#billModal"
+                                                                    data-date="<?php echo $billValue['date'];?>"
+                                                                    data-desc="<?php echo $billValue['description'];?>"
+                                                                    data-sum="<?php echo $billValue['sum'];?>"
+                                                                    data-category="<?php echo getCategoryFromId($data, $billValue['category'])['name'];?>"
+                                                                    data-categoryid="<?php echo getCategoryFromId($data, $billValue['category'])['id'];?>"
+                                                                    data-billid="<?php echo $billValue['id'];?>">
                   <?php echo $billValue['sum'];?>
                 </td>
               <?php else : ;?>

@@ -5,7 +5,10 @@
   display: none;
 }
 
-td:hover{
+td[data-toggle="modal"]:hover{
+  cursor: pointer;
+}
+th[data-toggle="modal"]:hover{
   cursor: pointer;
 }
 

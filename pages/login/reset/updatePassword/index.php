@@ -1,7 +1,4 @@
 <?php
-  if(!isset($_GET['key'])):?>
-    require_once("pages/login/reset/index.php");
-  <?php else:?><?php
     $conn = getConnection();
 
     $errorList = [];
@@ -11,7 +8,7 @@
     if($reset->num_rows >= 1):
       $reset = $reset->fetch_assoc();?>
       <section>
-        <form action="/components/login/reset/updatePassword/updatePassword.php" method="post" class="form-horizontal">
+        <form action="updatePassword.php" method="post" class="form-horizontal">
           <h3>Please enter your new password</h3>
 
           <div class="form-group">
@@ -46,6 +43,4 @@
 
       </section>
     <?php endif;
-  }
 ?>
-<?php endif;?>

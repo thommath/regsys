@@ -6,7 +6,7 @@ def run(dir, root):
             try:
                 content = open(dir + "/" + page).read()
 
-                for link in re.findall("href=\"([^\"(/?)(/#)(/')(http://)]*)\"", content)+re.findall("src=\"([^\"(http://)]*)\"", content)+re.findall("Location: http://\" . $_SERVER['SERVER_NAME'] . \"([^\"]*)\"", content):
+                for link in re.findall("action=\"([^\"?#]*)", content)+re.findall("href=\"([^\"?#']*)", content)+re.findall("src=\"([^\"'http:]*)\"", content)+re.findall("\$_SERVER\[\'SERVER_NAME\'\] . \"([^\"?#']*)", content):
                     if(link == "#" or link == ""):
                         continue
                     elif(link[0] == "/"):

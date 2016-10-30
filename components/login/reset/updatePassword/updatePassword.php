@@ -17,7 +17,7 @@ require_once("dependencies/php/login.php");
       $_SESSION['success'] = false;
       $_SESSION['error'] = $errorList;
       $_SESSION['post'] = $_POST;
-      header("Location: http://" . $_SERVER['SERVER_NAME'] . "/login/reset/updatePassword&key=" . $_POST['key'], true);
+      header("Location: http://" . $_SERVER['SERVER_NAME'] . "/login/reset/updatePassword?key=" . $_POST['key'], true);
       die();
     }else if($_POST['password'] != $_POST['password2']){
       array_push($errorList, "Not equal passwords.");
@@ -25,7 +25,7 @@ require_once("dependencies/php/login.php");
       $_SESSION['success'] = false;
       $_SESSION['error'] = $errorList;
       $_SESSION['post'] = $_POST;
-      header("Location: http://" . $_SERVER['SERVER_NAME'] . "/login/reset/updatePassword&key=" . $_POST['key'], true);
+      header("Location: http://" . $_SERVER['SERVER_NAME'] . "/login/reset/updatePassword?key=" . $_POST['key'], true);
       die();
     }else{
       foreach ($_POST as $key => $value) {
