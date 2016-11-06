@@ -1,3 +1,4 @@
+
 session_start();
 
 require_once("dependencies/php/redirect.php");
@@ -141,7 +142,7 @@ function changeMonth($date, $monthChange){
 }
 
 function calculateMonth($monthChange){
-    $m = (intval(date("m"))+intval($monthChange)+(12*1000)+($_SESSION['settings']['startDay'] < intval(date("d")) ? 1 : 0))%12;
+    $m = (intval(date("m"))+intval($monthChange)+(12*1000)+($_SESSION['settings']['startDay'] >= intval(date("d")) ? 1 : 0))%12;
     if($m < 10){
       $m = "0" . $m;
     }
@@ -154,9 +155,9 @@ function monthToString($monthChange){
         "June", "July", "August", "September", "October",
         "November", "December"];
   if(getMonthStart() == 1){
-    return $names[intval(date("m"))+intval($monthChange)-1 + ($_SESSION['settings']['startDay'] < intval(date("d")) ? 1 : 0)];
+    return $names[intval(date("m"))+intval($monthChange)-1 + ($_SESSION['settings']['startDay'] >= intval(date("d")) ? 1 : 0)];
   }else {
-    return substr($names[(intval(date("m"))+intval($monthChange)-2+12*1000 + ($_SESSION['settings']['startDay'] < intval(date("d")) ? 1 : 0))%12], 0, 3) . "/" . substr($names[(intval(date("m"))+intval($monthChange)-1+12*1000 + ($_SESSION['settings']['startDay'] < intval(date("d")) ? 1 : 0))%12], 0, 3);
+    return substr($names[(intval(date("m"))+intval($monthChange)-2+12*1000 + ($_SESSION['settings']['startDay'] >= intval(date("d")) ? 1 : 0))%12], 0, 3) . "/" . substr($names[(intval(date("m"))+intval($monthChange)-1+12*1000 + ($_SESSION['settings']['startDay'] >= intval(date("d")) ? 1 : 0))%12], 0, 3);
   }
 }
 
