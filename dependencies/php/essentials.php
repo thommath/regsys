@@ -133,20 +133,20 @@ function getMonthStart(){
 }
 
 function changeMonth($date, $monthChange){
-  $month['m'] = (intval(substr($date, 5, 6))+intval($monthChange)+(12*1000))%12;
+  $month['m'] = (intval(substr($date, 5, 6))+intval($monthChange)+(12*1000)-1)%12+1;
   if($month['m'] < 10){
     $month['m'] = '0' . $month['m'];
   }
-  $month['Y'] = intval(substr($date, 0, 4))+floor((intval(substr($date, 5, 6))+intval($monthChange)+12)/12)-1;
+  $month['Y'] = intval(substr($date, 0, 4))+floor((intval(substr($date, 5, 6))+intval($monthChange)-1)/12);
   return $month['Y'] . "-" . $month['m'];
 }
 
 function calculateMonth($monthChange){
-    $m = (intval(date("m"))+intval($monthChange)+(12*1000)+($_SESSION['settings']['startDay'] >= intval(date("d")) ? 1 : 0))%12;
+    $m = (intval(date("m"))+intval($monthChange)+(12*1000)+($_SESSION['settings']['startDay'] >= intval(date("d")) ? -1 : 0))%12+1;
     if($m < 10){
       $m = "0" . $m;
     }
-    return date("Y") . "-" . $m;
+    return intval(date("Y"))+floor((intval(date("m"))+intval($monthChange)+($_SESSION['settings']['startDay'] >= intval(date("d")) ? -1 : 0))/12) . "-" . $m;
 }
 
 
