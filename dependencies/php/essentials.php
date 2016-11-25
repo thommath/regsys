@@ -150,14 +150,14 @@ function calculateMonth($monthChange){
 }
 
 
-function monthToString($monthChange){
-  $names = ["January" , "February" , "March" , "April", "May",
+function monthToString($month){
+  $names = ["December", "January" , "February" , "March" , "April", "May",
         "June", "July", "August", "September", "October",
         "November", "December"];
   if(getMonthStart() == 1){
-    return $names[intval(date("m"))+intval($monthChange)-1 + ($_SESSION['settings']['startDay'] >= intval(date("d")) ? 1 : 0)];
+    return $names[($month + ($_SESSION['settings']['startDay'] >= intval(date("d")) ? 1 : 0))%12];
   }else {
-    return substr($names[(intval(date("m"))+intval($monthChange)-2+12*1000 + ($_SESSION['settings']['startDay'] >= intval(date("d")) ? 1 : 0))%12], 0, 3) . "/" . substr($names[(intval(date("m"))+intval($monthChange)-1+12*1000 + ($_SESSION['settings']['startDay'] >= intval(date("d")) ? 1 : 0))%12], 0, 3);
+    return substr($names[($month + ($_SESSION['settings']['startDay'] >= intval(date("d")) ? 0 : -1))%12], 0, 3) . "/" . substr($names[($month + ($_SESSION['settings']['startDay'] >= intval(date("d")) ? 1 : 0))%12], 0, 3);
   }
 }
 

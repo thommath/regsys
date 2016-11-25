@@ -22,7 +22,7 @@ dep:regnskap.js;style.css;modalBill.php;modalCategory.php;
 
   <section class="nav-month">
     <a href="?month=<?php echo (intval($monthChange)-1);?>"><span class="glyphicon glyphicon-arrow-left btn-lg" aria-hidden="true"></span></a>
-    <h3 class="center-block"><?php echo monthToString($monthChange);?></h3>
+    <h3 class="center-block"><?php echo monthToString(substr($month, 5, 6));?></h3>
     <a href="?&month=<?php echo (intval($monthChange)+1);?>"><span class="glyphicon glyphicon-arrow-right btn-lg" aria-hidden="true"></span></a>
   </section>
 
